@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\FarmerApprovalController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('admin/farmers/pending', [FarmerApprovalController::class, 'index'])
+        ->name('admin.farmers.pending');
+
+    Route::post('admin/farmers/approve-all', [FarmerApprovalController::class, 'approveAll'])
+        ->name('admin.farmers.approveAll');
+
+    Route::post('admin/farmers/{id}/approve', [FarmerApprovalController::class, 'approve'])
+        ->name('admin.farmers.approve');
 });
 
 require __DIR__.'/auth.php';

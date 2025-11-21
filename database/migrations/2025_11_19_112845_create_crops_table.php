@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('crops', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained();
-            $table->string('name')->unique(['category_id', 'name']);
+            $table->string('name');
             $table->decimal('price', 10, 2);
             $table->string('image_path')->nullable();
             $table->timestamps();
+            $table->unique(['category_id', 'name']);
         });
     }
 
