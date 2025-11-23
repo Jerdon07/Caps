@@ -45,7 +45,7 @@ Route::middleware(['auth', 'verified', 'approved.farmer'])->group(function () {
     Route::get('/farmers/{farmer}', [FarmerController::class], 'show')->name('farmers.show');
 
     Route::get('/profile', [FarmerProfileController::class, 'show'])->name('profile.edit');
-    Route::patch('/profile', FarmerProfileController::class, 'update')->name('profile.update');
+    Route::patch('/profile', [FarmerProfileController::class, 'update'])->name('profile.update');
 
 
     Route::get('/api/barangays', [FarmerController::class, 'getBarangays'])->name('farmer.api.barangays');
