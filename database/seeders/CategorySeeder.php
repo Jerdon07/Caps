@@ -14,10 +14,11 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Vegetables',
-            'Fruits',
-            'Cereals & Grains',
-            'Beverage & Spices',
+            'Flower/Stem Vegetables',
+            'Fruiting Vegetables',
+            'Leafy/Head Vegetables',
+            'Legumes/Podded',
+            'Root/Tuber Vegetables'
         ];
 
         foreach ($categories as $name) {

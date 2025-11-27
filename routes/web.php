@@ -85,18 +85,21 @@ Route::middleware(['auth', 'verified', 'approved.farmer'])->group(function () {
 // Dedicated Admin Group (Requires ALL checks: auth, verified, admin)
 // --------------------------------------------------------
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    //Crops
     Route::get('/crops', [AdminCropController::class, 'index'])->name('admin.crops.index'); // Read
     Route::get('/crops/create', [AdminCropController::class, 'create'])->name('admin.crops.create'); // Create
     Route::post('/crops', [AdminCropController::class, 'store'])->name('admin.crops.store'); // Store
     Route::post('/crops/{crop}', [AdminCropController::class, 'update'])->name('admin.crops.update'); // Update
     Route::delete('/crops/{crop}', [AdminCropController::class, 'destroy'])->name('admin.crops.destroy'); //Delete
-    
-    Route::get('/farmers', [AdminFarmerController::class, 'index'])->name('admin.farmers.index'); // Read
-    Route::post('/farmers', [AdminFarmerController::class, 'approve'])->name('admin.farmers.approve'); // Store
-    Route::delete('/farmers/{user}/approve', [AdminCropController::class, 'destroy'])->name('admin.farmers.destroy'); // Delete
+    // Farmers
+    Route::get('/farmers', [AdminFarmerController::class, 'index'])->name('admin.farmers.index');           // Fetch all Farmers
+    Route::get('/farmers/{farmer}', [AdminFarmerController::class, 'show'])->name('admin.farmers.show');    // Fetch a Specific Farmer
+    // Pending Farmers
+    Route::post('/farmers/{user}/approve', [AdminFarmerController::class, 'approve'])->name('admin.farmers.approve'); // Approve Pending Farmers
+    Route::delete('/farmers/{user}/reject', [AdminFarmerController::class, 'reject'])->name('admin.farmers.reject');    // Reject Pending Farmers
 
-    Route::get('/api/barangays', [AdminFarmerController::class, 'getBarangays'])->name('api.barangays');
-    Route::get('/api/sitios', [AdminFarmerController::class, 'getSitios'])->name('api.sitios');
+    Route::get('/api/barangays', [AdminFarmerController::class, 'getBarangays'])->name('admin.api.barangays');
+    Route::get('/api/sitios', [AdminFarmerController::class, 'getSitios'])->name('admin.api.sitios');
 });
 
 require __DIR__.'/auth.php';

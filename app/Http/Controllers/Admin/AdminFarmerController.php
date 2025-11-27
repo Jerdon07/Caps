@@ -40,13 +40,16 @@ class AdminFarmerController extends Controller
         $municipalities = Municipality::all();
 
         return Inertia::render('Admin/Farmers/Index', [
-            'approvedFarmers' => $approvedFarmers,
-            'pendingFarmers' => $pendingFarmers,
+            'approvedFarmers' => $approvedFarmers->get(),
+            'pendingFarmers' => $pendingFarmers->get(),
             'municipalities' => $municipalities,
             'filters' => $request->only(['municipality_id', 'barangay_id', 'sitio_id']),
         ]);
     }
 
+// --------------------------------------------------------
+// Pending Farmers Controller
+// --------------------------------------------------------
     public function approve(User $user) {
         if (!$user->farmer) {
             return redirect()->back()
@@ -58,17 +61,28 @@ class AdminFarmerController extends Controller
         return redirect()->back()->with('success', 'Farmer approved successfully.');
     }
 
-    public function destroy(Farmer $farmer) {
-        $user = $farmer->user;
+    public function reject(User $user) {
+        if (!$user->farmer) {
+            return redirect()->back()
+                ->with('error', 'User is not a Farmer.');
+        } $farmer = $user->farmer;
 
         $farmer->forceDelete();
-
         $user->forceDelete();
 
-        return redirect()->route('admin.farmers.index')
-            ->with('success', 'Farmer and associated account deleted successfully.');
+        return redirect()->back()
+            ->with('success', 'Farmer account rejected & deleted.');
     }
 
+    public function show(Farmer $farmer) {
+        $farmer->load(['user', 'municipality', 'barangay', 'sitio', 'crops.category']);
+
+        return response()->json($farmer);
+    }
+
+// --------------------------------------------------------
+// Address Controller (Municipality, Barangay, Sitio)
+// --------------------------------------------------------
     public function getBarangays(Request $request) {
         $barangays = Barangay::where('municipality_id', $request->municipality_id)->get();
         return response()->json($barangays);

@@ -31,6 +31,11 @@ class Farmer extends Model
         return $this->belongsTo(Barangay::class);
     }
 
+    public function sitio()
+    {
+        return $this->belongsTo(Sitio::class);
+    }
+
     public function crops()
     {
         return $this->belongsToMany(Crop::class, 'farmer_crop')
