@@ -39,6 +39,8 @@ class Farmer extends Model
     public function crops()
     {
         return $this->belongsToMany(Crop::class, 'farmer_crop')
+                    ->using(FarmerCrop::class)
+                    ->withPivot(['yield_kg', 'planting_date', 'harvesting_date'])
                     ->withTimestamps();
     }
 }

@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('farmer_crop', function (Blueprint $table) {
-            $table->id();
+            $table->id('plant_id');
             $table->foreignId('farmer_id')->constrained('farmers')->onDelete('cascade');
             $table->foreignId('crop_id')->constrained('crops')->onDelete('cascade');
-            $table->decimal('yield');
             $table->string('yield_kg');         // Actual Kilograms produced
             $table->date('planting_date');      // Exact Date
             $table->date('harvesting_date');    // Expected Harvesting Date
