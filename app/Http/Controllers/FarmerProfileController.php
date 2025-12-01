@@ -17,7 +17,7 @@ class FarmerProfileController extends Controller
     public function show()
     {
         $user = Auth::user();
-        $farmer = $user->farmer->load(['municipality', 'barangay', 'sitio', 'crops.category']);
+        $farmer = $user->farmer->load(['municipality', 'barangay', 'crops.category']);
         $allCrops = Crop::with('category')->get();
 
         return Inertia::render('Profile/FarmerProfile', [

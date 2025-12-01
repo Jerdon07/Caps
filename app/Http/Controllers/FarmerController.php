@@ -12,7 +12,7 @@ use Inertia\Inertia;
 class FarmerController extends Controller
 {
     public function index(Request $request) {
-        $query = Farmer::with(['user', 'municipality', 'barangay', 'sitio', 'crops'])
+        $query = Farmer::with(['user', 'municipality', 'barangay', 'crops'])
             ->whereHas('user', function($q) {
                 $q->where('isApproved', true);
             });
@@ -25,17 +25,13 @@ class FarmerController extends Controller
                 $query->where('barangay_id', $request->barangay_id);
             }
 
-            if ($request->filled('sitio_id')) {
-                $query->wjere('sitio_id', $request->sitio_id);
-            }
-
             $farmers = $query->get();
             $municipalities = Municipality::all();
 
             return Inertia::render('Farmers/Index', [
                 'farmers' => $farmers,
                 'municipalities' => $municipalities,
-                'filters' => $request->only(['municipality_id', 'barangay_id', 'sitio_id']),
+                'filters' => $request->only(['municipality_id', 'barangay_id']),
             ]);
     }
 
@@ -45,7 +41,7 @@ class FarmerController extends Controller
             abort(404);
         }
 
-        $farmer->load(['user', 'municipality', 'narangay', 'sitio', 'crops.category']);
+        $farmer->load(['user', 'municipality', 'barangay', 'crops.category']);
 
         return Inertia::render('Farmers/Show', [
             'farmer' => $farmer,
@@ -56,11 +52,5 @@ class FarmerController extends Controller
     {
         $barangays = Barangay::where('municipality_id', $request->municipality_id)->get();
         return response()->json($barangays);
-    }
-
-    public function getSitios(Request $request)
-    {
-        $sitios = Sitio::where('barangay_id', $request->barangay_id)->get();
-        return response()->json($sitios);
     }
 }

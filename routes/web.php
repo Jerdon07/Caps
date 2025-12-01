@@ -2,12 +2,9 @@
 
 use App\Http\Controllers\Admin\AdminCropController;
 use App\Http\Controllers\Admin\AdminFarmerController;
-use App\Http\Controllers\Admin\FarmerApprovalController;
 use App\Http\Controllers\CropController;
 use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\FarmerProfileController;
-use App\Http\Controllers\ProfileController;
-use App\Models\Farmer;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -31,14 +28,6 @@ Route::get('/public-api/barangays', function (Request $request) {
     $barangays = \App\Models\Barangay::where('municipality_id', $municipalityId)->get();
     return response()->json($barangays);
 });
-
-Route::get('/public-api/sitios', function (Request $request) {
-    $barangayId = $request->input('barangay_id');
-    $sitios = \App\Models\Sitio::where('barangay_id', $barangayId)->get();
-    return response()->json($sitios);
-});
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/pending', function() {
@@ -78,7 +67,6 @@ Route::middleware(['auth', 'verified', 'approved.farmer'])->group(function () {
 
 
     Route::get('/api/barangays', [FarmerController::class, 'getBarangays'])->name('farmer.api.barangays');
-    Route::get('/api/sitios', [FarmerController::class, 'getSitios'])->name('farmer.api.sitios');
 });
 
 // --------------------------------------------------------
@@ -99,7 +87,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/farmers/{user}/reject', [AdminFarmerController::class, 'reject'])->name('admin.farmers.reject');    // Reject Pending Farmers
 
     Route::get('/api/barangays', [AdminFarmerController::class, 'getBarangays'])->name('admin.api.barangays');
-    Route::get('/api/sitios', [AdminFarmerController::class, 'getSitios'])->name('admin.api.sitios');
 });
 
 require __DIR__.'/auth.php';
