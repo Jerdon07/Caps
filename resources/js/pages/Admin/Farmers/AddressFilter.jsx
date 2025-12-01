@@ -37,19 +37,6 @@ export default function AddressFilter({
                 ))}
             </select>
 
-            {/* Sitio */}
-            <select
-                value={filters.sitio_id}
-                onChange={(e) => setFilters(prev => ({ ...prev, sitio_id: e.target.value }))}
-                className="w-full mb-4 p-3 border rounded-lg"
-                disabled={!filters.barangay_id}
-            >
-                <option value="">Sitio</option>
-                {sitios.map(s => (
-                    <option key={s.id} value={s.id}>{s.name}</option>
-                ))}
-            </select>
-
             <button
                 onClick={applyFilters}
                 className="w-full bg-emerald-600 text-white p-2 rounded-lg"
