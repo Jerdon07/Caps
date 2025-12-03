@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barangay;
 use App\Models\Farmer;
 use App\Models\Municipality;
 use Illuminate\Http\Request;
@@ -29,12 +30,12 @@ class FarmerController extends Controller
         $farmers = $query->get();
         $municipalities = Municipality::all();
 
-        // Get barangays and sitios based on current filters
+        // Get barangays based on current filters
         $barangays = [];
-        $sitios = [];
         
         if ($request->filled('municipality_id')) {
-            $barangays = \App\Models\Barangay::where('municipality_id', $request->municipality_id)->get();
+            $barangays = Barangay::where('municipality_id', $request->municipality_id)
+            ->get();
         }
 
         return Inertia::render('Farmers/Index', [
@@ -59,7 +60,9 @@ class FarmerController extends Controller
 
     public function getBarangays(Request $request)
     {
-        $barangays = \App\Models\Barangay::where('municipality_id', $request->municipality_id)->get();
+        $barangays = Barangay::where('municipality_id', $request->municipality_id)
+        ->select('id', 'name', 'latitude', 'longitude')
+        ->get();
         return response()->json($barangays);
     }
 }

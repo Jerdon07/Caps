@@ -11,7 +11,7 @@ function RecenterMap({ lat, lng }) {
     const map = useMapEvents({});
     useEffect(() => {
         if (lat && lng) {
-            map.setView([lat, lng], 15, { animate: true });
+            map.setView([lat, lng], 14, { animate: true });
         }
     }, [lat, lng]);
     return null;
@@ -69,11 +69,6 @@ export default function Register({ municipalities = [], crops = [] }) {
 
         const b = barangays.find(b => String(b.id) === String(barangayId));
         setBarangayName(b ? b.name : '');
-
-        if (b?.latitude && b?.longitude) {
-            setTempLat(b.latitude);
-            setTempLng(b.longitude);
-        }
     };
 
     const handleCropToggle = (cropId) => {
@@ -402,7 +397,6 @@ export default function Register({ municipalities = [], crops = [] }) {
                             />
 
                             <RecenterMap lat={parseFloat(tempLat)} lng={parseFloat(tempLng)} />
-
                             <ClickCapture />
                             {(tempLat && tempLng) && (
                                 <Marker position={[parseFloat(tempLat), parseFloat(tempLng)]} />

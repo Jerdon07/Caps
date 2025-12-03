@@ -25,5 +25,4 @@ Route::get('/barangays', function (Request $request) {
 Route::get('/api/farmers/{farmer}', [FarmerController::class, 'show'])->name('api.farmers.show');
 
 // Public API routes for cascading dropdowns
-Route::get('/public-api/barangays', [FarmerController::class, 'getBarangays'])->name('public.api.barangays');
-Route::get('/public-api/sitios', [FarmerController::class, 'getSitios'])->name('public.api.sitios');
+Route::get('/barangays', [FarmerController::class, 'getBarangays'])->name('public.api.barangays');
