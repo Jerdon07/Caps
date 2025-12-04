@@ -4,6 +4,20 @@ import { useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import '@/utils/leafletSetup';
 
+function MapResizeFix({ isOpen }) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (isOpen) {
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 100); 
+        }
+    }, [isOpen, map]);
+
+    return null;
+}
+
 function MapController({ center, zoom }) {
     const map = useMap();
     
@@ -47,13 +61,14 @@ export default function MapModal({
                     <p className="text-xs text-gray-500 mt-1">Click on the map to set your exact farm location</p>
                 </div>
                 
-                <div className="w-full h-96 rounded-md overflow-hidden border">
+                <div className="w-full h-96 block rounded-md overflow-hidden border">
                     <MapContainer 
                         center={center} 
                         zoom={zoom} 
                         style={{ height: '100%', width: '100%' }}
                         scrollWheelZoom={true}
                     >
+                        <MapResizeFix isOpen={isOpen} />
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
