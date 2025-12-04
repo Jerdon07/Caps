@@ -7,6 +7,7 @@ import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-lea
 import 'leaflet/dist/leaflet.css';
 import '@/utils/leafletSetup';
 
+// Function to Recenter the Map
 function RecenterMap({ lat, lng, zoom }) {
     const map = useMap();
     useEffect(() => {
@@ -43,7 +44,6 @@ export default function Register({ municipalities = [], crops = [] }) {
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
     const [barangays, setBarangays] = useState([]);
-    const [locating, setLocating] = useState(false);
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [tempLat, setTempLat] = useState('16.4');
     const [tempLng, setTempLng] = useState('120.6');
@@ -51,24 +51,6 @@ export default function Register({ municipalities = [], crops = [] }) {
     const [municipalityName, setMunicipalityName] = useState('');
     const [barangayName, setBarangayName] = useState('');
     const [showPendingModal, setShowPendingModal] = useState(false);
-
-    // Approximate coordinates for Benguet municipalities
-    const municipalityCoordinates = {
-        '1': { lat: 16.4120, lng: 120.5960, name: 'Baguio City' },
-        '2': { lat: 16.4565, lng: 120.5897, name: 'La Trinidad' },
-        '3': { lat: 16.3719, lng: 120.6869, name: 'Itogon' },
-        '4': { lat: 16.4823, lng: 120.5432, name: 'Sablan' },
-        '5': { lat: 16.3108, lng: 120.5869, name: 'Tuba' },
-        '6': { lat: 16.5300, lng: 120.6200, name: 'Tublay' },
-        '7': { lat: 16.5800, lng: 120.6900, name: 'Atok' },
-        '8': { lat: 16.7800, lng: 120.6700, name: 'Bakun' },
-        '9': { lat: 16.5200, lng: 120.8300, name: 'Bokod' },
-        '10': { lat: 16.6700, lng: 120.8400, name: 'Buguias' },
-        '11': { lat: 16.4700, lng: 120.8600, name: 'Kabayan' },
-        '12': { lat: 16.5500, lng: 120.5900, name: 'Kapangan' },
-        '13': { lat: 16.6900, lng: 120.6500, name: 'Kibungan' },
-        '14': { lat: 16.8700, lng: 120.7800, name: 'Mankayan' },
-    };
 
     const handleMunicipalityChange = async (municipalityId) => {
         setData({ ...data, municipality_id: municipalityId, barangay_id: '' });
@@ -83,26 +65,20 @@ export default function Register({ municipalities = [], crops = [] }) {
         }
         
         try {
+            // Fetches the Barangays that has the corresponding Municipality.
             const response = await fetch(`/api/barangays?municipality_id=${municipalityId}`);
             const result = await response.json();
             setBarangays(result);
 
             // Get municipality coordinates from backend if available, otherwise use hardcoded
             const municipality = municipalities.find(m => String(m.id) === String(municipalityId));
-            const coords = municipalityCoordinates[municipalityId];
             
+            // If there's Municipality Selected, Add these Data.
             if (municipality) {
                 setMunicipalityName(municipality.name);
-                
-                // Use backend coordinates if available, otherwise use hardcoded
-                if (municipality.latitude && municipality.longitude) {
-                    setTempLat(String(municipality.latitude));
-                    setTempLng(String(municipality.longitude));
-                } else if (coords) {
-                    setTempLat(String(coords.lat));
-                    setTempLng(String(coords.lng));
-                }
-                setMapZoom(12); // Zoom to municipality level
+                setTempLat(String(municipality.latitude));
+                setTempLng(String(municipality.longitude));
+                setMapZoom(12);
             }
         } catch (error) {
             console.error('Error fetching barangays:', error);
