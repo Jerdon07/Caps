@@ -58,7 +58,7 @@ export default function MapCentricLayout({
                 )}
 
                 {/* Main Content Area */}
-                <div className={`relative z-10 ${leftSidebar ? 'md:ml-64' : ''}`}>
+                <div className={`relative ${leftSidebar ? 'md:ml-64' : ''}`}>
                     {children}
                 </div>
 
