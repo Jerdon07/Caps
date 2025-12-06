@@ -102,7 +102,7 @@ export default function Index({ crops, categories, filters }) {
         <MapCentricLayout
             title="Crops"
             leftSidebar={leftSidebar}
-            leftSidebarTitle=""
+            leftSidebarTitle="Crops"
             rightSidebarContent={rightSidebarContent}
             rightSidebarBadge={pendingFarmers?.length || 0}
             showMap={false}
