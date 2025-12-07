@@ -1,4 +1,5 @@
 import { Link, Head } from '@inertiajs/react';
+import Button from '@/Components/Buttons/Button';
 
 export default function Welcome({ auth }) {
     return (
@@ -19,34 +20,17 @@ export default function Welcome({ auth }) {
 
                             <div className="flex items-center space-x-4">
                                 {auth.user ? (
-                                    <>
-                                        <Link
-                                            href={route('farmers.index')}
-                                            className="px-4 py-2 text-gray-700 hover:text-green-600 font-medium"
-                                        >
-                                            Farmers
-                                        </Link>
-                                        <Link
-                                            href={route('crops.index')}
-                                            className="px-4 py-2 text-gray-700 hover:text-green-600 font-medium"
-                                        >
-                                            Crops
-                                        </Link>
-                                    </>
+                                    <Button variant="primary" size="md" href={route('logout')} method="post">
+                                        Sign out
+                                    </Button>
                                 ) : (
                                     <>
-                                        <Link
-                                            href={route('login')}
-                                            className="px-4 py-2 text-gray-700 hover:text-green-600 font-medium"
-                                        >
+                                        <Button variant="outline" size="md" href={route('login')}>
                                             Log in
-                                        </Link>
-                                        <Link
-                                            href={route('register')}
-                                            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium"
-                                        >
+                                        </Button>
+                                        <Button variant="primary" size="md" href={route('register')}>
                                             Sign up
-                                        </Link>
+                                        </Button>
                                     </>
                                 )}
                             </div>
@@ -64,18 +48,18 @@ export default function Welcome({ auth }) {
                             Connecting farmers and traders in Benguet Province through a centralized crop pricing platform
                         </p>
                         <div className="flex gap-4 justify-center">
-                            <Link
+                            <Button
                                 href={route('farmers.index')}
-                                className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium text-lg"
+                                variant='primary' size='xl'
                             >
                                 View Farmers
-                            </Link>
-                            <Link
+                            </Button>
+                            <Button
                                 href={route('crops.index')}
-                                className="px-6 py-3 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition-colors font-medium text-lg"
+                                variant='primary' size='xl'
                             >
                                 View Crops
-                            </Link>
+                            </Button>
                         </div>
                     </div>
                 </div>
