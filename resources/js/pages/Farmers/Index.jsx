@@ -9,15 +9,23 @@ import FarmerProfilePanel from '@/Components/Sidebars/FarmerProfilePanel';
 import AdminPendingPanel from '@/Components/Sidebars/AdminPendingPanel';
 import FarmerDetailModal from '@/Components/Modals/FarmerDetailModal';
 
-export default function Index({ farmers, municipalities, barangays: initialBarangays, filters }) {
+export default function Index({ 
+    farmers, 
+    municipalities, 
+    barangays: initialBarangays, 
+    filters 
+}) {
     const { auth, pendingFarmers } = usePage().props;
-    // Detects if the User is the Admin or Approved Farmer
+    
+    // Checks if the user is Admin or Approved Farmer
     const isAdmin = auth.user?.isAdmin;
     const isApprovedFarmer = auth.user && !auth.user.isAdmin && auth.user.isApproved;
 
+    // Left Sidebar Contents
     const [selectedMunicipality, setSelectedMunicipality] = useState(filters.municipality_id || '');
     const [selectedBarangay, setSelectedBarangay] = useState(filters.barangay_id || '');
     const [barangays, setBarangays] = useState(initialBarangays || []);
+
     const [selectedFarmer, setSelectedFarmer] = useState(null);
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
@@ -27,38 +35,37 @@ export default function Index({ farmers, municipalities, barangays: initialBaran
 
     useEffect(() => {
         markersRef.current = [];
+        console.log(markersRef.current);
     }, [farmers]);
 
     // --------------------------------------------------------
-    // Municipality
+    // Address Filter Handler
     // --------------------------------------------------------
-    const handleMunicipalityChange = (municipalityId) => {
-        setSelectedMunicipality(municipalityId);
-        setSelectedBarangay('');
-        
-        const params = {};
-        if (municipalityId) params.municipality_id = municipalityId;
-        
+    const updateFilters = (newFilters) => {
+        const params = {
+            municipality_id: (newFilters.municipality ?? selectedMunicipality) || '',
+            barangay_id: (newFilters.barangay ?? selectedBarangay) || '',
+        };
+
+        Object.keys(params).forEach(k => !params[k] && delete params[k]);
+
         router.get(route('farmers.index'), params, {
             preserveState: false,
             replace: true,
-        });
+        })
+    }
+
+    /* Municipality */
+    const handleMunicipalityChange = (id) => {
+        setSelectedMunicipality(id);
+        setSelectedBarangay('');
+        updateFilters({ municipality: id, barangay:'' });
     };
 
-    // --------------------------------------------------------
-    // Barangay
-    // --------------------------------------------------------
-    const handleBarangayChange = (barangayId) => {
-        setSelectedBarangay(barangayId);
-        
-        const params = {};
-        if (selectedMunicipality) params.municipality_id = selectedMunicipality;
-        if (barangayId) params.barangay_id = barangayId;
-        
-        router.get(route('farmers.index'), params, {
-            preserveState: false,
-            replace: true,
-        });
+    /* Barangay */
+    const handleBarangayChange = (id) => {
+        setSelectedBarangay(id);
+        updateFilters({ barangay: id });
     };
 
     // --------------------------------------------------------
@@ -68,7 +75,7 @@ export default function Index({ farmers, municipalities, barangays: initialBaran
     /* Searches for the Average Center Coordinate of Farmers */
     const getMapCenterAndZoom = () => {
         if (farmers.length === 0) {
-            return { center: [16.4, 120.6], zoom: 10 };
+            return { center: [16.4, 120.6], zoom: 11 };
         }
 
         const avgLat = farmers.reduce((sum, f) => sum + parseFloat(f.latitude), 0) / farmers.length;
