@@ -4,17 +4,24 @@ import AppLayout from '@/Layouts/AppLayout';
 import CategoryFilterPanel from '@/Components/Sidebars/CategoryFilterPanel';
 import FarmerProfilePanel from '@/Components/Sidebars/FarmerProfilePanel';
 import AdminPendingPanel from '@/Components/Sidebars/AdminPendingPanel';
+import CropGrid from '@/Components/Crops/CropGrid';
 import CropFormModal from '@/Components/Modals/CropFormModal';
 
-export default function Index({ crops, categories, filters }) {
+export default function Index({ 
+    crops, 
+    categories, 
+    filters,
+}) {
     const { auth, pendingFarmers } = usePage().props;
+
+    // Checks if the user is Admin or Approved Farmer
     const isAdmin = auth.user?.isAdmin;
     const isApprovedFarmer = auth.user && !auth.user.isAdmin && auth.user.isApproved;
 
+    // Left Sidebar Contents
     const [selectedCategory, setSelectedCategory] = useState(filters.category_id || '');
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Modal States
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editingCrop, setEditingCrop] = useState(null);
@@ -111,69 +118,14 @@ export default function Index({ crops, categories, filters }) {
             rightSidebarBadge={pendingFarmers?.length || 0}
             showMap={false}
         >
-            {/* Main Content */}
             <div className="min-h-screen p-6 bg-gray-50">
                 <div className="max-w-7xl mx-auto">
-                    {displayedCrops.length === 0 ? (
-                        <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-                            <p className="text-gray-500 text-lg">No crops found.</p>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                            {displayedCrops.map(crop => (
-                                <div 
-                                    key={crop.id} 
-                                    className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-200 relative"
-                                >
-                                    {/* Delete Button */}
-                                    {isAdmin && (
-                                        <button
-                                            onClick={() => handleDelete(crop)}
-                                            className="absolute top-3 right-3 z-10 px-4 py-1.5 bg-black text-white text-xs font-medium rounded-full hover:bg-gray-800 transition-colors"
-                                        >
-                                            DELETE
-                                        </button>
-                                    )}
-
-                                    {/* Image */}
-                                    <div className="aspect-square bg-green-50">
-                                        {crop.image ? (
-                                            <img
-                                                src={`/storage/${crop.image}`}
-                                                alt={crop.name}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center">
-                                                <svg className="w-16 h-16 text-green-300" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                                                </svg>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Info */}
-                                    <div className="p-4">
-                                        <h3 className="font-semibold text-base text-gray-800 mb-1">
-                                            {crop.name}
-                                        </h3>
-                                        <p className="text-lg font-bold text-gray-900">
-                                            € {parseFloat(crop.price).toFixed(2)}
-                                        </p>
-
-                                        {isAdmin && (
-                                            <button
-                                                onClick={() => openEditModal(crop)}
-                                                className="mt-3 w-full px-4 py-2 border-2 border-black text-black text-sm font-medium rounded-full hover:bg-gray-50 transition-colors"
-                                            >
-                                                Edit
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    <CropGrid
+                        crops={displayedCrops}
+                        isAdmin={isAdmin}
+                        onEdit={openEditModal}
+                        onDelete={handleDelete}
+                    />
                 </div>
             </div>
 

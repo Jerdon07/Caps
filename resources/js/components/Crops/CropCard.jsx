@@ -1,0 +1,56 @@
+export default function CropCard({ 
+    crop, 
+    isAdmin, 
+    onEdit, 
+    onDelete,
+}) {
+    return (
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-200 relative">
+            {/* Delete Button */}
+            {isAdmin && (
+                <button
+                    onClick={() => onDelete(crop)}
+                    className="absolute top-3 right-3 z-10 px-4 py-1.5 bg-black text-white text-xs font-medium rounded-full hover:bg-gray-800 transition-colors"
+                >
+                    DELETE
+                </button>
+            )}
+
+            {/* Image */}
+            <div className="aspect-square bg-green-50">
+                {crop.image ? (
+                    <img
+                        src={`/storage/${crop.image}`}
+                        alt={crop.name}
+                        className="w-full h-full object-cover"
+                    />
+                ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                        <svg className="w-16 h-16 text-green-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                        </svg>
+                    </div>
+                )}
+            </div>
+
+            {/* Info */}
+            <div className="p-4">
+                <h3 className="font-semibold text-base text-gray-800 mb-1">
+                    {crop.name}
+                </h3>
+                <p className="text-lg font-bold text-gray-900">
+                    € {parseFloat(crop.price).toFixed(2)}
+                </p>
+
+                {isAdmin && (
+                    <button
+                        onClick={() => onEdit(crop)}
+                        className="mt-3 w-full px-4 py-2 border-2 border-black text-black text-sm font-medium rounded-full hover:bg-gray-50 transition-colors"
+                    >
+                        Edit
+                    </button>
+                )}
+            </div>
+        </div>
+    );
+}
