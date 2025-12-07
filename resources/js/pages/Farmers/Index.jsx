@@ -35,7 +35,6 @@ export default function Index({
 
     useEffect(() => {
         markersRef.current = [];
-        console.log(markersRef.current);
     }, [farmers]);
 
     // --------------------------------------------------------
@@ -109,11 +108,11 @@ export default function Index({
     };
 
     useEffect(() => {
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             markersRef.current.forEach(m => {
                 m.openPopup();
             });
-        }, 50);
+        });
     }, [farmers]);
 
     // Left sidebar content
