@@ -1,4 +1,4 @@
-import Modal from '@/Components/Modal';
+import BaseModal from "@/Components/Modals/Base/BaseModal";
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import { useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
@@ -51,7 +51,11 @@ export default function MapModal({
     onConfirm 
 }) {
     return (
-        <Modal show={isOpen} onClose={onClose} maxWidth="2xl">
+        <BaseModal 
+            show={isOpen} 
+            onClose={onClose} 
+            maxWidth="2xl"
+        >
             <div className="bg-white rounded-lg p-6">
                 <div className="text-center mb-4">
                     <h3 className="text-lg font-semibold">Locate your Farm!</h3>
@@ -103,6 +107,6 @@ export default function MapModal({
                     </button>
                 </div>
             </div>
-        </Modal>
+        </BaseModal>
     );
 }

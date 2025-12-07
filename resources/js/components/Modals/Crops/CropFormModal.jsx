@@ -1,6 +1,6 @@
 import { useForm } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
-import BaseModal from './Base/BaseModal';
+import BaseModal from '@/Components/Modals/Base/BaseModal';
 
 export default function CropFormModal({ isOpen, onClose, crop }) {
     const isEditing = !!(crop && crop.id); // treat object-without-id as create-preload

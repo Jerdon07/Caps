@@ -7,7 +7,7 @@ import MapUpdater from '@/Components/Map/MapUpdater';
 import AddressFilterPanel from '@/Components/Sidebars/AddressFilterPanel';
 import FarmerProfilePanel from '@/Components/Sidebars/FarmerProfilePanel';
 import AdminPendingPanel from '@/Components/Sidebars/AdminPendingPanel';
-import FarmerDetailModal from '@/Components/Modals/FarmerDetailModal';
+import FarmerDetailModal from '@/Components/Modals/Farmers/FarmerDetailModal';
 
 export default function Index({ 
     farmers, 

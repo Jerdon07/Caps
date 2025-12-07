@@ -5,7 +5,7 @@ import CategoryFilterPanel from '@/Components/Sidebars/CategoryFilterPanel';
 import FarmerProfilePanel from '@/Components/Sidebars/FarmerProfilePanel';
 import AdminPendingPanel from '@/Components/Sidebars/AdminPendingPanel';
 import CropGrid from '@/Components/Crops/CropGrid';
-import CropFormModal from '@/Components/Modals/CropFormModal';
+import CropFormModal from '@/Components/Modals/Crops/CropFormModal';
 
 export default function Index({ 
     crops, 
