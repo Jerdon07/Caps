@@ -12,9 +12,11 @@ export default function Welcome({ auth }) {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between items-center h-16">
                             <div className="flex items-center space-x-2">
-                                <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                                </svg>
+                                <img 
+                                    src="/assets/hrvst.svg" 
+                                    alt="Hrvst" 
+                                    className="w-8 h-8 object-contain"
+                                />
                                 <span className="text-2xl font-bold text-gray-800">Hrvst</span>
                             </div>
 

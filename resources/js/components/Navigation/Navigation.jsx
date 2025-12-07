@@ -22,9 +22,11 @@ export default function Navigation({ onMobileMenuToggle }) {
                         </button>
 
                         <Link href="/" className="flex items-center space-x-2">
-                            <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                            </svg>
+                            <img 
+                                src="/assets/hrvst.svg" 
+                                alt="Hrvst" 
+                                className="w-8 h-8 object-contain"
+                            />
                             <span className="text-2xl font-bold text-gray-900">Hrvst</span>
                         </Link>
                     </div>

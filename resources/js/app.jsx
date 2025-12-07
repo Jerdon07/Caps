@@ -5,7 +5,7 @@ import '../css/app.css';
 import 'leaflet/dist/leaflet.css'; // GIS API
 import './bootstrap';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Hrvst';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
