@@ -53,18 +53,20 @@ export default function Button({
 
     // Link button
     if (href) {
-        return (
-            <Link
-                href={href}
-                method={method}
-                as="button"
-                className={combinedClasses}
-                disabled={disabled}
-                {...props}
-            >
-                {children}
-            </Link>
-        );
+        const linkProps = {
+            href,
+            as: "button",
+            className: combinedClasses,
+            disabled,
+            ...props
+        };
+        
+        // Only add method prop if it has a valid value
+        if (method) {
+            linkProps.method = method;
+        }
+
+        return <Link {...linkProps}>{children}</Link>;
     }
     
     // Regular button
