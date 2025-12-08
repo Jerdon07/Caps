@@ -33,7 +33,7 @@ export default function AppLayout({
             <Navigation onMobileMenuToggle={toggleLeftSidebar} />
 
             {/* Main Layout */}
-            <div className="p-0 min-h-screen">
+            <div className="h-screen flex flex-col">
                 {/* Map Background (if enabled) */}
                 {showMap && (
                     <div className="fixed inset-0 top-16 z-0">

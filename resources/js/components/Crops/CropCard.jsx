@@ -21,7 +21,7 @@ export default function CropCard({
             )}
 
             {/* Image */}
-            <div className="aspect-square bg-green-50">
+            <div className="h-32 w-full bg-green-50">
                 {crop.image_path ? (
                     <img
                         src={`/storage/${crop.image_path}`}
