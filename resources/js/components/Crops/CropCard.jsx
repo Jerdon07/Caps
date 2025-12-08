@@ -17,11 +17,11 @@ export default function CropCard({
                     className="absolute top-3 right-3 z-10 rounded-full"
                 >
                     DELETE
-            </Button>
+                </Button>
             )}
 
             {/* Image */}
-            <div className="aspect-square bg-green-50">
+            <div className="h-32 w-full bg-green-50">
                 {crop.image ? (
                     <img
                         src={`/storage/${crop.image}`}
