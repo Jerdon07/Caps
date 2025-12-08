@@ -22,9 +22,9 @@ export default function CropCard({
 
             {/* Image */}
             <div className="aspect-square bg-green-50">
-                {crop.image ? (
+                {crop.image_path ? (
                     <img
-                        src={`/storage/${crop.image}`}
+                        src={`/storage/${crop.image_path}`}
                         alt={crop.name}
                         className="w-full h-full object-cover"
                     />

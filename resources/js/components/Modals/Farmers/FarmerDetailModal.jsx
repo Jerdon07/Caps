@@ -32,9 +32,9 @@ export default function FarmerDetailModal({ isOpen, onClose, farmer }) {
                             key={crop.id}
                             className="w-20 h-20 bg-green-50 rounded-2xl flex items-center justify-center"
                         >
-                            {crop.image ? (
+                            {crop.image_path ? (
                                 <img
-                                    src={`/storage/${crop.image}`}
+                                    src={`/storage/${crop.image_path}`}
                                     alt={crop.name}
                                     className="w-full h-full object-cover rounded-2xl"
                                 />

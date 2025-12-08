@@ -28,12 +28,12 @@ class AdminCropController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0|max:999999.99',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('crops', 'public');
-            $validate['image'] = $path;
+        if ($request->hasFile('image_path')) {
+            $path = $request->file('image_path')->store('crops', 'public');
+            $validate['image_path'] = $path;
         }
 
         $crop->create($validate);
@@ -50,16 +50,16 @@ class AdminCropController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0|max:999999.99',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($crop->image) {
-                Storage::disk('public')->delete($crop->image);
+        if ($request->hasFile('image_path')) {
+            if ($crop->image_path) {
+                Storage::disk('public')->delete($crop->image_path);
             }
 
-            $path = $request->file('image')->store('crops', 'public');
-            $validated['image'] = $path;
+            $path = $request->file('image_path')->store('crops', 'public');
+            $validated['image_path'] = $path;
         }
 
         $crop->update($validated);
@@ -74,12 +74,12 @@ class AdminCropController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0|max:999999.99',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('crops', 'public');
-            $validated['image'] = $path;
+        if ($request->hasFile('image_path')) {
+            $path = $request->file('image_path')->store('crops', 'public');
+            $validated['image_path'] = $path;
         }
 
         Crop::create($validated);

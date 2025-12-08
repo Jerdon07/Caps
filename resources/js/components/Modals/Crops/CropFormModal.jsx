@@ -11,7 +11,7 @@ export default function CropFormModal({ isOpen, onClose, crop }) {
         name: '',
         price: '',
         category_id: '',
-        image: null,
+        image_path: null,
     });
 
     // Initialize when modal opens OR crop prop changes.
@@ -23,9 +23,9 @@ export default function CropFormModal({ isOpen, onClose, crop }) {
                 name: crop.name || '',
                 price: crop.price || '',
                 category_id: crop.category_id || '',
-                image: null,
+                image_path: null,
             });
-            setImagePreview(crop.image ? `/storage/${crop.image}` : null);
+            setImagePreview(crop.image_path ? `/storage/${crop.image_path}` : null);
         } else {
             // fresh create with no category prefill
             reset();
@@ -36,7 +36,7 @@ export default function CropFormModal({ isOpen, onClose, crop }) {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setData('image', file);
+        setData('image_path', file);
 
         if (file) {
             const reader = new FileReader();
@@ -131,7 +131,7 @@ export default function CropFormModal({ isOpen, onClose, crop }) {
                         onChange={handleImageChange}
                         className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
                     />
-                    {errors.image && <p className="text-red-600 text-sm mt-1">{errors.image}</p>}
+                    {errors.image_path && <p className="text-red-600 text-sm mt-1">{errors.image_path}</p>}
 
                     {imagePreview && (
                         <div className="mt-3">
