@@ -1,5 +1,3 @@
-// Genreic Container
-
 export default function LeftSidebar({ isOpen, onClose, children, title }) {
     return (
         <>
