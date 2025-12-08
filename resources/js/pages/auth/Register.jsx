@@ -103,8 +103,8 @@ export default function Register({ municipalities = [], crops = [] }) {
 
     // Map Handlers
     const openMapModal = () => {
-        if (!data.municipality_id) {
-            alert('Please select a municipality first');
+        if (!data.barangay_id) {
+            alert('Please select a barangay first');
             return;
         }
         
@@ -233,7 +233,6 @@ export default function Register({ municipalities = [], crops = [] }) {
                             <GeolocationBtn
                                 hasLocation={!!(data.latitude && data.longitude)}
                                 onOpenMap={openMapModal}
-                                disabled={!data.municipality_id}
                                 errors={errors}
                             />
 
