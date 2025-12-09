@@ -39,7 +39,7 @@ export default function RightSidebar({ isOpen, onToggle, children, badge, title 
 
                 {/* Expanded Content */}
                 {isOpen && (
-                    <div className="pt-16 px-4 pb-4 overflow-y-auto h-full">
+                    <div className="pt-16 px-4 pb-4 overflow-y-auto h-full scrollbar-hide">
                         {children}
                     </div>
                 )}
