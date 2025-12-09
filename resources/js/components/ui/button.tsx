@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-
+import { Link } from "@inertiajs/react"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
@@ -36,25 +36,44 @@ const buttonVariants = cva(
   }
 )
 
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : "button"
-
-  return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+  href?: string
+  method?: "get" | "post" | "put" | "patch" | "delete"
+  fullWidth?: boolean
 }
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, href, method, fullWidth, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    const widthClass = fullWidth ? "w-full" : ""
+
+    // If href is provided, render as Inertia Link
+    if (href) {
+      return (
+        <Link
+          href={href}
+          method={method}
+          as="button"
+          className={cn(buttonVariants({ variant, size }), widthClass, className)}
+          {...(props as any)}
+        >
+          {props.children}
+        </Link>
+      )
+    }
+
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size }), widthClass, className)}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Button.displayName = "Button"
 
 export { Button, buttonVariants }
