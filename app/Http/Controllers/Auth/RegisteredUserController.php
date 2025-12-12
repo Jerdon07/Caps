@@ -27,7 +27,7 @@ class RegisteredUserController extends Controller
         $municipalities = Municipality::all();
         $crops = Crop::with('category')->get();
 
-        return Inertia::render('Auth/Register', [
+        return Inertia::render('auth/Register/Index', [
             'municipalities' => $municipalities,
             'crops' => $crops,
         ]);
