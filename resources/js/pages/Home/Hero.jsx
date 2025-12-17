@@ -1,4 +1,5 @@
-import { Button } from "@/Components/ui/button"
+import { Button } from "@/components/ui/button"
+import { Link } from "@inertiajs/react";
 import { MapPinned } from "lucide-react";
 import { Carrot } from "lucide-react";
 
@@ -14,19 +15,17 @@ export default function Hero () {
                         Connecting farmers and traders in Benguet Province through a centralized crop pricing platform
                     </p>
                     <div className="flex gap-4 justify-center">
-                        <Button
-                            href={route('farmers.index')}
-                            variant='secondary' size="lg"
-                        >
-                            <MapPinned />View Farmers
-                        </Button>
+                        <Link href={route('farmers.index')}>
+                            <Button variant='secondary' size="lg">
+                                <MapPinned />View Farmers
+                            </Button>
+                        </Link>
 
-                        <Button
-                            href={route('crops.index')}
-                            variant='primary' size="lg"
-                        >
-                            <Carrot />View Crops
-                        </Button>
+                        <Link href={route('crops.index')}>
+                            <Button variant='primary' size="lg">
+                                <Carrot />View Crops
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </div>
