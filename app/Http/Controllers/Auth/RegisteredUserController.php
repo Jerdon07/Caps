@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Crop;
 use App\Models\Farmer;
 use App\Models\Municipality;
@@ -25,10 +26,12 @@ class RegisteredUserController extends Controller
     public function create(): Response
     {
         $municipalities = Municipality::all();
+        $categories = Category::with('crops')->get();
         $crops = Crop::with('category')->get();
 
-        return Inertia::render('Auth/Register', [
+        return Inertia::render('auth/Register/Index', [
             'municipalities' => $municipalities,
+            'categories' => $categories,
             'crops' => $crops,
         ]);
     }
@@ -49,15 +52,13 @@ class RegisteredUserController extends Controller
             'barangay_id' => 'required|exists:barangays,id',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
+            'image_path' => 'nullable|image|max:2048',
             'crops' => 'required|array|min:1|max:5',
             'crops.*' => 'exists:crops,id',
         ]);
 
         $latitude = $request->latitude;
         $longitude = $request->longitude;
-
-        $withinBenguet = ($latitude >= 16.0 && $latitude <= 16.8) &&
-                         ($longitude >= 120.3 && $latitude <= 120.8);
 
         DB::beginTransaction();
 
@@ -77,6 +78,7 @@ class RegisteredUserController extends Controller
                 'barangay_id' => $request->barangay_id,
                 'latitude' => $latitude,
                 'longitude' => $longitude,
+                'image_path' => $request->file('image_path') ? $request->file('image_path')->store('farmer_images', 'public') : null,
             ]);
 
             $farmer->crops()->attach($request->crops);
@@ -87,9 +89,7 @@ class RegisteredUserController extends Controller
 
             Auth::login($user);
 
-            return redirect('/')->with([
-                'location_warning' => !$withinBenguet ? 'Your GPS coordinates appear to be outside Benguet Province. Your account will be reviewed by an administrator.' : null
-            ]);
+            return redirect('/')->with('success', 'User created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;

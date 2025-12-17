@@ -1,12 +1,16 @@
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
-import PersonalInfoFields from '@/Components/Registration/PersonalInfoFields';
-import LocationFields from '@/Components/Registration/LocationFields';
-import GeolocationBtn from '@/Components/Buttons/GeolocationBtn';
-import CropSelection from '@/Components/Registration/CropSelection';
-import MapModal from '@/Components/Modals/Maps/MapModal';
-import PendingModal from '@/Components/Modals/Alerts/PendingModal';
-import Button from '@/Components/Buttons/Button';
+
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+
+import PersonalInfoFields from '@/components/Registration/PersonalInfoFields';
+import LocationFields from '@/components/Registration/LocationFields';
+import GeolocationBtn from '@/components/Buttons/GeolocationBtn';
+import CropSelection from '@/components/Registration/CropSelectionFields';
+import MapModal from '@/components/Modals/Maps/MapModal';
+import PendingModal from '@/components/Modals/Alerts/PendingModal';
+import Button from '@/components/Buttons/Button';
 
 // Municipality coordinates for Benguet Province
 const MUNICIPALITY_COORDS = {
@@ -37,6 +41,7 @@ export default function Register({ municipalities = [], crops = [] }) {
         barangay_id: '',
         latitude: '',
         longitude: '',
+        image_path: null,
         crops: [],
     });
 
@@ -53,6 +58,9 @@ export default function Register({ municipalities = [], crops = [] }) {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [municipalityName, setMunicipalityName] = useState('');
     const [barangayName, setBarangayName] = useState('');
+
+    // Image State
+    const [imagePreview, setImagePreview] = useState(null);
 
     // Municipality Change Handler
     const handleMunicipalityChange = async (municipalityId) => {
@@ -144,6 +152,18 @@ export default function Register({ municipalities = [], crops = [] }) {
         setIsMapOpen(false);
     };
 
+    // Image Change Handler
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setData('image_path', file);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => setImagePreview(reader.result);
+            reader.readAsDataURL(file);
+        }
+    };
+
     // Crop Toggle Handler
     const handleCropToggle = (cropId) => {
         const currentCrops = data.crops;
@@ -178,84 +198,126 @@ export default function Register({ municipalities = [], crops = [] }) {
 
     return (
         <>
+            {/* STEP 1 : Personal Information*/}
+            {/* Full name */}
+            {/* Email address */}
+            {/* Password */}
+            {/* Phone number */}
+
+            {/* STEP 2 : Address & Location */}
+            {/* Municipality */}
+            {/* Barangay */}
+            {/* Geolocation */}
+
+            {/* STEP 3 : Crops Planted */}
+            {/* Crops */}
+
             <Head title="Register" />
             
-            <div className="flex min-h-screen">
-                {/* Left Side - Dark Background */}
-                <div className="hidden lg:flex lg:w-1/2 bg-black items-center justify-center p-12">
-                    <div className="max-w-md text-center">
-                        <div className="flex justify-center mb-8">
-                            <svg className="w-24 h-24 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                            </svg>
-                        </div>
-                        <h1 className="text-5xl font-bold text-white mb-6">
-                            Create your free account
-                        </h1>
+            <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
+                <div className='w-full max-w-sm md:max-w-4xl'>
+                    <div className={cn("flex flex-col gap-6")}>
+                        <Card className="overflow-hidden p-0">
+                            <CardContent className="grid p-0 md:grid-cols-2">
+                                
+                            </CardContent>
+                        </Card>
                     </div>
-                </div>
-
-                {/* Right Side - Form */}
-                <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50">
-                    <div className="w-full max-w-md">
-                        {/* Already have account link */}
-                        <div className="text-right mb-8">
-                            <span className="text-gray-600">Already have an account?</span>
-                            {' '}
-                            <Link
-                                href={route('login')}
-                                className="text-gray-900 font-medium hover:underline"
-                            >
-                                Sign In →
-                            </Link>
+                
+                    <div className="hidden lg:flex lg:w-1/2 bg-black items-center justify-center p-12">
+                        <div className="max-w-md text-center">
+                            <div className="flex justify-center mb-8">
+                                <svg className="w-24 h-24 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                                </svg>
+                            </div>
+                            <h1 className="text-5xl font-bold text-white mb-6">
+                                Create your free account
+                            </h1>
                         </div>
+                    </div>
 
-                        <form onSubmit={submit} className="space-y-6">
-                            <PersonalInfoFields
-                                data={data}
-                                setData={setData}
-                                errors={errors}
-                                showPassword={showPassword}
-                                setShowPassword={setShowPassword}
-                                showPasswordConfirmation={showPasswordConfirmation}
-                                setShowPasswordConfirmation={setShowPasswordConfirmation}
-                            />
+                    {/* Right Side - Form */}
+                    <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50">
+                        <div className="w-full max-w-md">
+                            {/* Already have account link */}
+                            <div className="text-right mb-8">
+                                <span className="text-gray-600">Already have an account?</span>
+                                {' '}
+                                <Link
+                                    href={route('login')}
+                                    className="text-gray-900 font-medium hover:underline"
+                                >
+                                    Sign In →
+                                </Link>
+                            </div>
 
-                            <LocationFields
-                                data={data}
-                                municipalities={municipalities}
-                                barangays={barangays}
-                                onMunicipalityChange={handleMunicipalityChange}
-                                onBarangayChange={handleBarangayChange}
-                                errors={errors}
-                            />
+                            <form onSubmit={submit} className="space-y-6">
+                                <PersonalInfoFields
+                                    data={data}
+                                    setData={setData}
+                                    errors={errors}
+                                    showPassword={showPassword}
+                                    setShowPassword={setShowPassword}
+                                    showPasswordConfirmation={showPasswordConfirmation}
+                                    setShowPasswordConfirmation={setShowPasswordConfirmation}
+                                />
 
-                            <GeolocationBtn
-                                hasLocation={!!(data.latitude && data.longitude)}
-                                onOpenMap={openMapModal}
-                                errors={errors}
-                            />
-
-                            {crops.length > 0 && (
-                                <CropSelection
-                                    crops={crops}
-                                    selectedCrops={data.crops}
-                                    onCropToggle={handleCropToggle}
+                                <LocationFields
+                                    data={data}
+                                    municipalities={municipalities}
+                                    barangays={barangays}
+                                    onMunicipalityChange={handleMunicipalityChange}
+                                    onBarangayChange={handleBarangayChange}
                                     errors={errors}
                                 />
-                            )}
 
-                            {/* Submit Button */}
-                            <Button 
-                                type="submit" 
-                                variant="primary" 
-                                size="lg" 
-                                fullWidth 
-                                disabled={processing}
-                            >
-                                {processing ? 'Creating Account...' : 'Create Account'}
-                            </Button>
-                        </form>
+                                <GeolocationBtn
+                                    hasLocation={!!(data.latitude && data.longitude)}
+                                    onOpenMap={openMapModal}
+                                    errors={errors}
+                                />
+
+                                <div>
+                                    <label className="block text-sm font-medium mb-2">
+                                        Image
+                                    </label>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageChange}
+                                    />
+                                    {errors.image_path && <p className="text-red-600 text-sm mt-1">{errors.image_path}</p>}
+                                    <div className="mt-3">
+                                        <img
+                                            src={imagePreview}
+                                            alt="Preview"
+                                            className="w-full h-48 object-cover rounded-md border border-gray-200"
+                                        />
+                                    </div>
+                                </div>
+
+                                {crops.length > 0 && (
+                                    <CropSelection
+                                        crops={crops}
+                                        selectedCrops={data.crops}
+                                        onCropToggle={handleCropToggle}
+                                        errors={errors}
+                                    />
+                                )}
+
+                                {/* Submit Button */}
+                                <Button 
+                                    type="submit" 
+                                    variant="primary" 
+                                    size="lg" 
+                                    fullWidth 
+                                    disabled={processing}
+                                >
+                                    {processing ? 'Creating Account...' : 'Create Account'}
+                                </Button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
