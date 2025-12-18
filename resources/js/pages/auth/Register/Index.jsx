@@ -6,6 +6,7 @@ import Layout from "@/layouts/RegistrationLayout"
 /* Components */
 import Personal from "@/components/Registration/PersonalInfoFields";
 import Location from "@/components/Registration/LocationFields";
+import FarmImage from "@/components/Registration/FarmImageFields";
 import CropSelection from "@/components/Registration/CropSelectionFields";
 
 import { FieldGroup, Field } from "@/components/ui/field";
@@ -25,6 +26,7 @@ export default function Register({municipalities=[], categories=[], crops=[]}) {
         barangay_id: '',
         latitude: '',
         longitude: '',
+        image_path: '',
         crops: [],
     });
 
@@ -57,7 +59,7 @@ export default function Register({municipalities=[], categories=[], crops=[]}) {
 
     return (
         <Layout>
-            <form onSubmit={submit} className=" p-6 md:p-8">
+            <form onSubmit={submit} className=" p-3 md:p-8">
                 <FieldGroup className="flex min-h-full flex-col gap-4">
                     {/* STEP 1 : Personal Information */}
                     {step === 1 && (
@@ -71,6 +73,9 @@ export default function Register({municipalities=[], categories=[], crops=[]}) {
 
                     {/* STEP 3 : Crop Planted this Month */}
                     {step === 3 && (
+                        <FarmImage data={data} setData={setData} errors={errors}/>
+                    )}
+                    {step === 4 && (
                         <CropSelection data={data} setData={setData} errors={errors} categories={categories} crops={crops}/>
                     )}
 
@@ -92,7 +97,7 @@ export default function Register({municipalities=[], categories=[], crops=[]}) {
                             </Button>
                         </>)}
 
-                        {step < 3 ? (<>
+                        {step < 4 ? (<>
                             <Button onClick={nextStep} type="button" className="col-span-3 col-start-2 w-full"
                                 disabled={processing || (step === 1 && !isStep1Valid) || (step === 2 && !isStep2Valid)}
                             >
@@ -104,7 +109,7 @@ export default function Register({municipalities=[], categories=[], crops=[]}) {
                             <Button type="submit" disabled={processing} className="col-span-3 col-start-2 w-full">
                                 {processing
                                 ? <Spinner/>
-                                : (<>{'Next'}<CircleCheck/></>)}
+                                : (<>{'Create'}<CircleCheck/></>)}
                             </Button>
                         </>)}
                     </Field>
