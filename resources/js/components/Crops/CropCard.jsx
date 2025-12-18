@@ -14,14 +14,14 @@ export default function CropCard({
                     variant="black"
                     size="sm"
                     onClick={() => onDelete(crop)}
-                    className="absolute top-3 right-3 z-10 rounded-full"
+                    className="absolute top-2 right-2 md:top-3 md:right-3 z-10 rounded-full text-xs md:text-sm px-2 md:px-3 py-1"
                 >
                     DELETE
             </Button>
             )}
 
             {/* Image */}
-            <div className="h-32 w-full bg-green-50">
+            <div className="h-28 md:h-32 w-full bg-green-50">
                 {crop.image_path ? (
                     <img
                         src={`/storage/${crop.image_path}`}
@@ -30,7 +30,7 @@ export default function CropCard({
                     />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                        <svg className="w-16 h-16 text-green-300" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-12 h-12 md:w-16 md:h-16 text-green-300" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
                         </svg>
                     </div>
@@ -38,11 +38,11 @@ export default function CropCard({
             </div>
 
             {/* Info */}
-            <div className="p-4">
-                <h3 className="font-semibold text-base text-gray-800 mb-1">
+            <div className="p-3 md:p-4">
+                <h3 className="font-semibold text-sm md:text-base text-gray-800 mb-1">
                     {crop.name}
                 </h3>
-                <p className="text-lg font-bold text-gray-900">
+                <p className="text-base md:text-lg font-bold text-gray-900">
                     ₱{parseFloat(crop.low_price).toFixed(2)} - ₱{parseFloat(crop.high_price).toFixed(2)}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
@@ -55,7 +55,7 @@ export default function CropCard({
                         size="md"
                         fullWidth
                         onClick={() => onEdit(crop)}
-                        className="mt-3 rounded-full"
+                        className="mt-3 rounded-full text-xs md:text-sm"
                     >
                         Edit
                     </Button>

@@ -8,7 +8,7 @@ export default function CategoryFilter({
     onAddCrop
 }) {
     return (
-        <div className="flex flex-col space-y-6 w-64">
+        <div className="flex flex-col space-y-4 md:space-y-6 w-full">
             {/* Search Bar */}
             <div className="relative">
                 <input
@@ -16,10 +16,10 @@ export default function CategoryFilter({
                     placeholder="Search Vegetables"
                     value={searchQuery}
                     onChange={(e) => onSearchChange(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 text-sm md:text-base border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
                 <svg 
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400"
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
@@ -29,27 +29,27 @@ export default function CategoryFilter({
             </div>
 
             {/* Categories */}
-            <div className="flex flex-col overflow-y-auto">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">Categories</h3>
+            <div className="flex flex-col overflow-y-auto max-h-[60vh]">
+                <h3 className="text-base md:text-lg font-bold text-gray-800 mb-3 md:mb-4">Categories</h3>
                 <div className="space-y-1">
                     {categories.map(category => (
                         <button
                             key={category.id}
                             onClick={() => onCategoryClick(category.id)}
-                            className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex justify-between items-center ${
+                            className={`w-full text-left px-3 md:px-4 py-2 md:py-3 rounded-lg transition-colors flex justify-between items-center text-sm md:text-base ${
                                 selectedCategory == category.id 
                                     ? 'bg-black text-white font-semibold' 
                                     : 'text-gray-700 hover:bg-gray-100 font-medium'
                             }`}
                         >
-                            <span>{category.name}</span>
+                            <span className="truncate">{category.name}</span>
                             {isAdmin && selectedCategory == category.id && (
                                 <span
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         onAddCrop(category.id);
                                     }}
-                                    className="text-white hover:text-gray-200 cursor-pointer"
+                                    className="text-white hover:text-gray-200 cursor-pointer ml-2 flex-shrink-0 text-xs md:text-sm"
                                 >
                                     Add
                                 </span>

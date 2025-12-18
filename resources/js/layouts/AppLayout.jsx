@@ -22,7 +22,7 @@ export default function AppLayout({
         <>
             <Head title={title} />
             
-            <div className="h-screen flex flex-col">
+            <div className="h-screen flex flex-col overflow-hidden">
                 {/* Map/Content Background */}
                 <div className="fixed inset-0 top-16 z-0">
                     {showMap ? mapContent : <div className="bg-white w-full h-full" />}
@@ -30,6 +30,14 @@ export default function AppLayout({
 
                 {/* Navigation */}
                 <Navigation onMobileMenuToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)} />
+
+                {/* Mobile Overlay for Left Sidebar */}
+                {isLeftSidebarOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+                        onClick={() => setIsLeftSidebarOpen(false)}
+                    />
+                )}
 
                 {/* Content */}
                 <div className='relative flex flex-row overflow-hidden justify-between pointer-events-none h-full'>
@@ -45,7 +53,7 @@ export default function AppLayout({
                     )}
 
                     {/* Main Content Area */}
-                    <div className='flex-grow overflow-y-auto pr-12 pointer-events-none'>
+                    <div className='flex-grow overflow-y-auto md:pr-12 pr-0 pointer-events-none'>
                         <div className='pointer-events-auto'>
                             {children}
                         </div>

@@ -90,7 +90,7 @@ export default function Index({ crops, categories, filters }) {
             rightSidebarBadge={pendingFarmers?.length || 0}
             showMap={false}
         >
-            <div className="w-full p-6 bg-gray-50">
+            <div className="w-full p-3 md:p-6 bg-gray-50">
                 <div className="max-w-7xl mx-auto">
                     <CropGrid
                         crops={displayedCrops}

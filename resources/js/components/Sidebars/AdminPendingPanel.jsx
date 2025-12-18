@@ -36,38 +36,38 @@ export default function AdminPendingPanel() {
 
     return (
         <>
-            <div className="flex items-center mb-6">
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3">
-                    <svg className="w-6 h-6 text-gray-800" fill="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center mb-4 md:mb-6">
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center mr-2 md:mr-3">
+                    <svg className="w-5 h-5 md:w-6 md:h-6 text-gray-800" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
                     </svg>
                 </div>
-                <h2 className="text-xl font-bold text-white">Pending Accounts</h2>
+                <h2 className="text-lg md:text-xl font-bold text-white">Pending Accounts</h2>
             </div>
 
             {!pendingFarmers || pendingFarmers.length === 0 ? (
-                <p className="text-gray-300 text-center py-8">No pending farmers</p>
+                <p className="text-gray-300 text-center py-6 md:py-8 text-sm md:text-base">No pending farmers</p>
             ) : (
-                <div className="space-y-3">
+                <div className="space-y-2 md:space-y-3">
                     {pendingFarmers.map(farmer => ( 
-                        <div key={farmer.id} className="bg-gray-200 rounded-lg p-4">
-                            <div className="font-semibold text-gray-900 mb-1">
+                        <div key={farmer.id} className="bg-gray-200 rounded-lg p-3 md:p-4">
+                            <div className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
                                 {farmer.user.name}
                             </div>
 
-                            <div className="text-sm text-gray-600 mb-3">
+                            <div className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3">
                                 {farmer.barangay.name}, {farmer.municipality.name},
                                 Benguet
                             </div>
                             
-                            <div className="flex gap-2">
-                                <Button variant="primary" size="sm" onClick={() => handleViewLocation(farmer)}>
-                                    View Location
+                            <div className="flex flex-col sm:flex-row gap-2">
+                                <Button variant="primary" size="sm" onClick={() => handleViewLocation(farmer)} className="w-full sm:w-auto text-xs md:text-sm">
+                                    View
                                 </Button>
-                                <Button variant="primary" size="sm" onClick={() => handleApprove(farmer.user_id)}>
+                                <Button variant="primary" size="sm" onClick={() => handleApprove(farmer.user_id)} className="w-full sm:w-auto text-xs md:text-sm">
                                     Approve
                                 </Button>
-                                <Button variant="danger" size="sm" onClick={() => handleReject(farmer.user_id)}>
+                                <Button variant="danger" size="sm" onClick={() => handleReject(farmer.user_id)} className="w-full sm:w-auto text-xs md:text-sm">
                                     Reject
                                 </Button>
                             </div>

@@ -28,40 +28,40 @@ export default function RightSidebar({ title }) {
             {/* Collapsed Strip - Always Visible */}
             <div
                 className={`
-                    absolute right-0 top-0 h-full bg-white border-l transition-all duration-300 ease-in-out z-50
+                    fixed md:absolute right-0 top-0 h-full bg-white border-l transition-all duration-300 ease-in-out z-50
                     pointer-events-auto
-                    ${isOpen ? 'w-72' : 'w-16'}
+                    ${isOpen ? 'w-full md:w-72' : 'w-12 md:w-16'}
                 `}
             >
                 {/* Toggle Button */}
                 <button
                     onClick={toggle}
-                    className="absolute left-2 top-4 text-black hover:text-green-950 transition-colors"
+                    className="absolute left-1 md:left-2 top-4 text-black hover:text-green-950 transition-colors z-10"
                 >
                     {!isOpen ? (
                         <>
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
                             {badge > 0 && (
-                                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs flex items-center justify-center font-bold">
+                                <span className="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-red-500 rounded-full text-xs flex items-center justify-center font-bold text-white">
                                     {badge}
                                 </span>
                             )}
                         </>
                     ) : (
-                        <div className="flex">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center gap-2">
+                            <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
-                            <h2 className="hidden md:block text-xl font-bold text-gray-800 mb-6">{title}</h2>
+                            <h2 className="text-lg md:text-xl font-bold text-gray-800">{title}</h2>
                         </div>
                     )}
                 </button>
 
                 {/* Expanded Content */}
                 {isOpen && (
-                    <div className="pt-16 px-4 pb-4 overflow-y-auto h-full scrollbar-hide">
+                    <div className="pt-16 px-3 md:px-4 pb-4 overflow-y-auto h-full scrollbar-hide">
                         {memberContent}
                     </div>
                 )}
