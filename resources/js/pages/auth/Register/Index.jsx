@@ -55,8 +55,6 @@ export default function Register({municipalities=[], categories=[], crops=[]}) {
         data.latitude &&
         data.longitude
 
-    console.log(data.name);
-
     return (
         <Layout>
             <form onSubmit={submit} className=" p-6 md:p-8">
@@ -64,7 +62,6 @@ export default function Register({municipalities=[], categories=[], crops=[]}) {
                     {/* STEP 1 : Personal Information */}
                     {step === 1 && (
                         <Personal data={data} setData={setData} errors={errors}/>
-
                     )}
 
                     {/* STEP 2 : Address & Location */}
@@ -77,20 +74,21 @@ export default function Register({municipalities=[], categories=[], crops=[]}) {
                         <CropSelection data={data} setData={setData} errors={errors} categories={categories} crops={crops}/>
                     )}
 
+                    {/* Buttons */}
                     <Field className="flex-0 grid grid-cols-3 gap-4">
                         {step < 2 ? (<>
                             <Link href='/'>
                                 <Button onClick={'/'} type="button" variant="outline" className="col-span-1 w-full"
                                     disabled={processing}
                                 >
-                                    <><House/>{'Home'}</>
+                                    <House/><span className="hidden md:inline">Home</span>
                                 </Button>
                             </Link>
                         </>) : (<>
                             <Button onClick={prevStep} type="button" variant="outline" className="col-span-1 w-full"
                                 disabled={processing}
                             >
-                                <><ArrowLeft/>{'Back'}</>
+                                <ArrowLeft/><span className="hidden md:inline">Back</span>
                             </Button>
                         </>)}
 
