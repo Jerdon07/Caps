@@ -8,6 +8,7 @@ import {
     Drawer, DrawerContent, DrawerHeader, DrawerTitle
 } from '@/components/ui/drawer'
 
+import { useMounted } from "@/hooks/useMounted";
 import useMediaQuery from '@/components/responsive/useMediaQuery'
 
 export default function ResponsiveOverlay ({
@@ -21,28 +22,36 @@ export default function ResponsiveOverlay ({
     title: string
     children: React.ReactNode
 }) {
+    const mounted = useMounted()
     const isDesktop = useMediaQuery("(min-width: 768px)")
+
+    if(!mounted) return null
 
     if(isDesktop) {
         return (
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>{title}</DialogTitle>
-                    </DialogHeader>
-                    {children}
+                <DialogContent className="p-5">
+                    <div className='m-auto w-full max-w-sm'>
+                        <DialogHeader>
+                            <DialogTitle>{title}</DialogTitle>
+                        </DialogHeader>
+                        {children}
+                    </div>
                 </DialogContent>
             </Dialog>
         )
     }
 
     return (
-        <Drawer>
+        <Drawer open={open} onOpenChange={onOpenChange}>
             <DrawerContent>
-                <DrawerHeader>
-                    <DrawerTitle>{title}</DrawerTitle>
-                </DrawerHeader>
-                {children}
+                <div>
+                    <DrawerHeader>
+                        <DrawerTitle>{title}</DrawerTitle>
+                    </DrawerHeader>
+                    {children}
+                </div>
+                
             </DrawerContent>
         </Drawer>
     )
