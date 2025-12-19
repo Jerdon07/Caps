@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { router, usePage } from '@inertiajs/react';
-import AppLayout from '@/Layouts/AppLayout';
-import CategoryFilter from '@/Components/Crops/CategoryFilter';
-import FarmerProfilePanel from '@/Components/Sidebars/FarmerProfilePanel';
-import AdminPendingPanel from '@/Components/Sidebars/AdminPendingPanel';
-import CropGrid from '@/Components/Crops/CropGrid';
-import CropFormModal from '@/Components/Modals/Crops/CropFormModal';
+import AppLayout from '@/layouts/AppLayout';
+import CategoryFilter from '@/components/Crops/CategoryFilter';
+import FarmerProfilePanel from '@/components/Sidebars/FarmerProfilePanel';
+import AdminPendingPanel from '@/components/Sidebars/AdminPendingPanel';
+import { ImageOff } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Separator } from '@/components/ui/separator';
+import CropFormModal from '@/components/Modals/Crops/CropFormModal';
 
 export default function Index({ crops, categories, filters }) {
     const { auth, pendingFarmers } = usePage().props;
@@ -90,15 +93,35 @@ export default function Index({ crops, categories, filters }) {
             rightSidebarBadge={pendingFarmers?.length || 0}
             showMap={false}
         >
-            <div className="w-full p-6 bg-gray-50">
-                <div className="max-w-7xl mx-auto">
-                    <CropGrid
-                        crops={displayedCrops}
-                        isAdmin={isAdmin}
-                        onEdit={openEditModal}
-                        onDelete={handleDelete}
-                    />
-                </div>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
+                {crops.map(crop => (
+                    <Card key={crop.id} className='p-0 max-w-sm cursor-pointer transition-all duration-200 hover:shadow-xl hover:-translate-y-1 hover:border-primary'>
+                        <CardContent onClick={() => {console.log('clickable')}} className='w-full p-0 rounded-t-xl overflow-hidden'>
+                            <AspectRatio ratio={16/9} className='h-full'>
+                                {crop.image_path ? (
+                                    <img src={`/storage/${crop.image_path}`} alt={crop.name} className="w-full h-full rounded-t-xl" />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center bg-primary text-card"><ImageOff size={40} /></div>
+                                )}
+                            </AspectRatio>
+                            
+                            <CardHeader className='py-1 px-2 gap-1'>
+                                <CardTitle>{crop.name}</CardTitle>
+                                <Separator />
+                                <CardDescription className='flex flex-col text-xs'>
+                                    <div>
+                                        <p>₱: {parseFloat(crop.price_min).toFixed(2)}-{parseFloat(crop.price_max).toFixed(2)}</p>
+                                    </div>
+                                    <div className=''>
+                                        <p className='text-right'>{crop.crop_weeks} average weeks</p>
+                                    </div>
+                                    
+                                </CardDescription>
+                        </CardHeader>
+                        </CardContent>
+                        
+                    </Card>
+                ))}
             </div>
 
             <CropFormModal
