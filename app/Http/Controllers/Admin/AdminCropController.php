@@ -75,11 +75,12 @@ class AdminCropController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'low_price' => 'required|numeric|min:0|max:999999.99',
-            'high_price' => 'required|numeric|min:0|max:999999.99|gte:low_price',
-            'harvest_weeks' => 'required|integer|min:1|max:52',
             'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'price_min' => 'required|numeric|min:0|max:999999.99',
+            'price_max' => 'required|numeric|min:0|max:999999.99|gte:low_price',
+            'crop_weeks' => 'required|integer|min:1|max:52',
+            'recorded_at' => 'required|date',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

@@ -33,13 +33,11 @@ class Farmer extends Model
         return $this->belongsTo(Barangay::class);
     }
 
-    
-
     public function crops()
     {
         return $this->belongsToMany(Crop::class, 'farmer_crop')
                     ->using(FarmerCrop::class)
-                    ->withPivot(['yield_kg', 'planting_date', 'harvesting_date'])
+                    ->withPivot(['yield_kg', 'date_planted', 'date_harvested'])
                     ->withTimestamps();
     }
 }

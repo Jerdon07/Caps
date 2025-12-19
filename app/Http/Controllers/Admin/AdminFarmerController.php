@@ -46,6 +46,12 @@ class AdminFarmerController extends Controller
 // --------------------------------------------------------
 // Pending Farmers Controller
 // --------------------------------------------------------
+    public function show(User $user) {
+        $user->load(['farmer', 'municipality', 'barangay', 'crops.category']);
+
+        return response()->json($user);
+    }
+
     public function approve(User $user) {
         if (!$user->farmer) {
             return redirect()->back()
@@ -56,7 +62,7 @@ class AdminFarmerController extends Controller
         return redirect()->back()->with('success', 'Farmer approved successfully.');
     }
 
-    public function reject(User $user) {
+    public function delete(User $user) {
         if (!$user->farmer) {
             return redirect()->back()
                 ->with('error', 'User is not a Farmer.');
@@ -69,9 +75,5 @@ class AdminFarmerController extends Controller
             ->with('success', 'Farmer account rejected & deleted.');
     }
 
-    public function show(Farmer $farmer) {
-        $farmer->load(['user', 'municipality', 'barangay', 'crops.category']);
-
-        return response()->json($farmer);
-    }
+    
 }

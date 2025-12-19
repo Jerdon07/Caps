@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained();
             $table->string('name');
+            $table->integer('crop_weeks')->comment('The average weeks of the crop');
             $table->decimal('price_min', 5, 2)  ->comment('The minimum price of the crop');
             $table->decimal('price_max', 5, 2)  ->comment('The maximum price of the crop');
-            $table->date('recorded_at')         ->comment('Record the updated prices');
+            $table->date('recorded_at')->nullable()->comment('Record the updated prices when admin change the price for chart JS');
             $table->string('image_path')->nullable();
             $table->timestamps();
             $table->unique(['category_id', 'name']);

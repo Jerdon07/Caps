@@ -6,19 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Crop extends Model
 {
+    /* Mass Assignment Protection */
     protected $fillable = [
         'category_id', 
-        'name', 
-        'low_price', 
-        'high_price', 
-        'harvest_weeks',
+        'name',
+        'crop_weeks',
+        'price_min', 
+        'price_max', 
+        'recorded_at',
         'image_path'
     ];
-
+    /* Converts a database column value into a specific PHP data type */
     protected $casts = [
-        'low_price' => 'decimal:2',
-        'high_price' => 'decimal:2',
-        'harvest_weeks' => 'integer',
+        'crop_weeks' => 'integer',
+        'price_min' => 'decimal:2',
+        'price_max' => 'decimal:2',
+        'recorded_at' => 'date',
     ];
 
     public function category()
@@ -30,7 +33,7 @@ class Crop extends Model
     {
         return $this->belongsToMany(Farmer::class, 'farmer_crop')
             ->using(FarmerCrop::class)
-            ->withPivot(['yield_kg', 'planting_date', 'harvesting_date', 'planted_at', 'status'])
+            ->withPivot(['yield_kg', 'date_planted', 'date_harvested'])
             ->withTimestamps();
     }
 
@@ -39,7 +42,7 @@ class Crop extends Model
      */
     public function getAveragePriceAttribute(): float
     {
-        return ($this->low_price + $this->high_price) / 2;
+        return ($this->price_min + $this->price_max) / 2;
     }
 
     /**
@@ -47,6 +50,6 @@ class Crop extends Model
      */
     public function getPriceRangeAttribute(): string
     {
-        return "₱{$this->low_price} - ₱{$this->high_price}";
+        return "₱{$this->price_min} - ₱{$this->price_max}";
     }
 }

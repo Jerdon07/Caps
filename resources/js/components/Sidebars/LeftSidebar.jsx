@@ -9,8 +9,6 @@ export default function LeftSidebar({ isOpen, children }) {
                     overflow-y-auto pointer-events-auto
                 `}
             >
-
-                    {/* Content */}
                     {children}
             </div>
         </>

@@ -6,27 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Prunable;
 
 class FarmerCrop extends Pivot
 {
+    use Prunable;
+
     protected $table = 'farmer_crop';
 
     protected $primaryKey = 'plant_id';
-
+    /* Mass Assignment Protection */
     protected $fillable = [
         'farmer_id',
         'crop_id',
         'yield_kg',
-        'planting_date',
-        'harvesting_date',
-        'planted_at',
-        'status'
+        'date_planted',
+        'date_harvested',
     ];
-
+    /* Converts a database column value into a specific PHP data type */
     protected $casts = [
-        'planting_date' => 'date',
-        'harvesting_date' => 'date',
-        'planted_at' => 'datetime',
+        'date_planted' => 'date',
+        'date_harvested' => 'date',
     ];
     
     public function farmer(): BelongsTo
@@ -36,7 +36,7 @@ class FarmerCrop extends Pivot
 
     public function crop(): BelongsTo
     {
-        return $this->belongsTo(Crop::class, 'crop_id', 'crop_id');
+        return $this->belongsTo(Crop::class, 'crop_id');
     }
 
     /**
@@ -44,12 +44,12 @@ class FarmerCrop extends Pivot
      */
     public function isExpired(): bool
     {
-        if (!$this->planted_at || !$this->crop) {
+        if (!$this->date_planted || !$this->crop) {
             return false;
         }
 
-        $harvestDate = Carbon::parse($this->planted_at)->addWeeks($this->crop->harvest_weeks);
-        return Carbon::now()->isAfter($harvestDate);
+        $harvestDate = Carbon::parse($this->date_planted)->addWeeks($this->crop->crop_weeks);
+        return Carbon::now()->isAfter($harvestDate); // return boolean
     }
 
     /**
@@ -57,36 +57,36 @@ class FarmerCrop extends Pivot
      */
     public function getExpectedHarvestDateAttribute(): ?Carbon
     {
-        if (!$this->planted_at || !$this->crop) {
+        if (!$this->date_planted || !$this->crop) {
             return null;
         }
 
-        return Carbon::parse($this->planted_at)->addWeeks($this->crop->harvest_weeks);
+        return Carbon::parse($this->date_planted)->addWeeks($this->crop->crop_weeks);
     }
 
     /**
      * Scope to get only active crops (not expired or harvested)
      */
-    public function scopeActive($query)
+    /* public function scopeActive($query)
     {
         return $query->where('status', 'active');
-    }
+    } */
 
     /**
      * Scope to get only non-expired crops
      */
-    public function scopeNotExpired($query)
+    /* public function scopeNotExpired($query)
     {
         return $query->where(function ($q) {
             $q->where('status', '!=', 'expired')
               ->where('status', '!=', 'harvested');
         });
-    }
+    } */
 
     /**
      * Update status based on expiration
      */
-    public function updateStatusIfExpired(): bool
+    /* public function updateStatusIfExpired(): bool
     {
         if ($this->status === 'active' && $this->isExpired()) {
             $this->status = 'expired';
@@ -94,15 +94,15 @@ class FarmerCrop extends Pivot
             return true;
         }
         return false;
-    }
+    } */
 
     /**
      * Boot method to automatically check expiration
      */
-    protected static function booted()
+    /* protected static function booted()
     {
         static::retrieved(function ($farmerCrop) {
             $farmerCrop->updateStatusIfExpired();
         });
-    }
+    } */
 }
