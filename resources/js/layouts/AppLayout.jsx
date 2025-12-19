@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import Navigation from '@/components/Navigation/Navigation';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetFooter, SheetTrigger } from "@/components/ui/sheet"
+import { Button } from '@/components/ui/button';
 import LeftSidebar from '@/components/Sidebars/LeftSidebar';
-import RightSidebar from '@/components/Sidebars/RightSidebar';
+import AdminProfile from '@/components/admin/AdminProfile';
+import ApprovedProfile from '@/components/approved/ApprovedProfile';
 
 export default function AppLayout({ 
     children, 
@@ -15,9 +18,11 @@ export default function AppLayout({
     showMap = true,
     mapContent = null
 }) {
-    const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
-    const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
+    const { auth } = usePage().props;
+    const user = auth.user;
 
+    const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
+    const [openProfile, setOpenProfile] = useState(false)
     return (
         <>
             <Head title={title} />
@@ -29,7 +34,7 @@ export default function AppLayout({
                 </div>
 
                 {/* Navigation */}
-                <Navigation onMobileMenuToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)} />
+                <Navigation onMobileMenuToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)} setOpenProfile={setOpenProfile} />
 
                 {/* Content */}
                 <div className='relative flex flex-row overflow-hidden justify-between pointer-events-none h-full'>
@@ -52,16 +57,39 @@ export default function AppLayout({
                     </div>
 
                     {/* Right Sidebar */}
-                    {rightSidebarContent && (
-                        <RightSidebar
-                            isOpen={isRightSidebarOpen}
-                            onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-                            badge={rightSidebarBadge}
-                            title={rightSidebarTitle}
-                        >
-                            {rightSidebarContent}
-                        </RightSidebar>
+                    {auth.user?.isApproved && (
+                        <Sheet open={openProfile} onOpenChange={setOpenProfile}>
+                            <SheetContent>
+                                <SheetHeader>
+                                    <SheetTitle>{auth.user?.name} Panel</SheetTitle>
+                                    <SheetDescription>
+                                        {auth.user?.isAdmin
+                                            ? 'Check the pending farmers and verify'
+                                            : 'This is your profile'
+                                        }
+                                    </SheetDescription>
+                                </SheetHeader>
+                                    <div className='px-4'>
+                                        {auth.user?.isAdmin
+                                            ? (<AdminProfile />)
+                                            : (<ApprovedProfile />)
+                                        }
+                                    </div>
+                                    
+                                <SheetFooter>
+
+                                </SheetFooter>
+                            </SheetContent>
+                        </Sheet>
+
+                        
                     )}
+
+                    {/* <RightSidebar openProfile={openProfile}>
+                            {auth.user?.isAdmin
+                            ? (<AdminPendingPanel />)
+                            : (<FarmerProfilePanel />)}
+                        </RightSidebar> */}
                 </div>
             </div>
         </>

@@ -1,11 +1,9 @@
 import { Link, usePage } from '@inertiajs/react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ListFilter } from 'lucide-react';
-import { User } from 'lucide-react';
-import { MapPinned } from 'lucide-react';
-import { ChartCandlestick } from 'lucide-react';
+import { ListFilter, User, MapPinned, ChartCandlestick, PanelRightOpen } from 'lucide-react';
 
-export default function Navigation() {
+export default function Navigation({ setOpenProfile }) {
     const {props, url} = usePage();
     const isHome = url === '/';
 
@@ -32,7 +30,7 @@ export default function Navigation() {
                     <div className="hidden md:flex space-x-1">
                         <Link href={route('farmers.index')}>
                             <Button variant='ghost'>Farmers</Button>
-                        </Link>
+                    </Link>
                         <Link href={route('crops.index')}>
                             <Button variant='ghost'>Crops</Button>
                         </Link>
@@ -46,10 +44,12 @@ export default function Navigation() {
                     </Button>
 
                     <div className="hidden md:flex items-center space-x-3">
-                        {props.auth.user ? (
+                        {props.auth.user ? (<>
                             <Link href={route('logout')} method="post">
                                 <Button variant='outline'>Sign out</Button>
                             </Link>
+                            <Button onClick={() => setOpenProfile(true)} variant='ghost' size='icon-lg'><PanelRightOpen/></Button>
+                        </>
                         ) : (<>
                             <Link href={route('login')}>
                                 <Button variant="outline">Log in</Button>
