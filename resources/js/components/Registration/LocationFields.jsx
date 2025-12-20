@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import ResponsiveOverlay from '../responsive/responsiveOverlay';
 import MapDialog from '@/components/Registration/MapDialog';
-
-import { Field, FieldLabel } from '@/components/ui/field';
+import { FieldGroup, Field, FieldLabel } from '@/components/ui/field';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
@@ -25,7 +23,6 @@ export default function Location({ data, setData, errors, municipalities, }) {
     const [loadingCoordinates, setLoadingCoordinates] = useState(false);
 
     /* Fetches Barangay by Municipality */
-
     useEffect(() => {
         if (!data.municipality_id) {
             setBarangays([]);
