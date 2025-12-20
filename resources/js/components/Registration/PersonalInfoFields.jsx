@@ -4,7 +4,6 @@ import { Eye, EyeOff, User } from 'lucide-react';
 
 import { FieldGroup, Field, FieldLabel, FieldDescription } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import InputError from '@/components/InputError';
 
 export default function Personal({ data, setData, errors }) {
     const [showPassword, setShowPassword] = useState(false);
