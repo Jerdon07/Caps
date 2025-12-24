@@ -35,7 +35,7 @@ class AdminFarmerController extends Controller
 
         $municipalities = Municipality::all();
 
-        return Inertia::render('Farmers/Index', [
+        return Inertia::render('admin/farmers/Index', [
             'approvedFarmers' => $approvedFarmers->get(),
             'pendingFarmers' => $pendingFarmers->latest()->get(),
             'municipalities' => $municipalities,
