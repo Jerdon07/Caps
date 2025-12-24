@@ -1,17 +1,14 @@
-import { Head } from '@inertiajs/react';
-import Navigation from '@/components/Navigation/Navigation';
+import AppLayout from '@/layouts/app-layout';
 import Hero from '@/pages/Home/Hero';
 
 export default function Index() {
     return (
-        <>
-            <Head title="Welcome to Hrvst" />
-
+        <AppLayout
+            title='Home'
+            sidebarHeader={'This is your Sidebar'}
+            sidebarContent={null}
+        >
             <div className="flex flex-col min-h-screen bg-linear-to-br from-green-50 to-white">
-                {/* Navigation */}
-                <Navigation/>
-
-                {/* Hero Section */}
                 <Hero />
 
                 {/* Features */}
@@ -56,6 +53,6 @@ export default function Index() {
                     </div>
                 </div>
             </div>
-        </>
+        </AppLayout>
     );
 }
