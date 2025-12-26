@@ -1,7 +1,7 @@
 
 import { Head } from "@inertiajs/react";
 import NavBar from "@/components/Navigation/nav-bar";
-import { AppSidebar } from "@/components/Sidebar/app-sidebar";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
 
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
