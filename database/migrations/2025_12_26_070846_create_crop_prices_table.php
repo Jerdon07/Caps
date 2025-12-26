@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('crops', function (Blueprint $table) {
+        Schema::create('crop_prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained();
-            $table->string('name');
-            $table->string('image_path')->nullable();
-            $table->integer('crop_weeks');
+            $table->foreignId('crop_id')->constrained()->cascadeOnDelete();
+            $table->decimal('price_min', 5, 2);
+            $table->decimal('price_max', 5, 2);
+            $table->date('recorded_at')->now()->toDateString();
             $table->timestamps();
-            $table->unique(['category_id', 'name']);
+
+            $table->unique(['crop_id']);
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('crops');
+        Schema::dropIfExists('crop_prices');
     }
 };
