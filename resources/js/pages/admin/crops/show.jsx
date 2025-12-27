@@ -1,14 +1,74 @@
 
-
+import { useRef } from "react";
 import AdminLayout from "@/layouts/admin-layout"
 
-export default function Show({  }) {
+import {
+    Chart as ChartJS,
+    BarElement,
+    CategoryScale,
+    LinearScale,
+    Tooltip,
+    Legend,
+    Colors,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+BarElement,
+CategoryScale,
+LinearScale,
+Tooltip,
+Legend,
+Colors,
+); 
+
+export default function Show({ crop, chart }) {
+    const data = {
+        labels: chart.labels,
+        datasets: [
+          {
+            label: 'Weekly Price Range',
+            data: chart.ranges,
+            borderRadius: 6,
+          },
+        ],
+      };
+    
+      const options = {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const [min, max] = ctx.raw;
+                return `Min: ₱${min} — Max: ₱${max}`;
+              },
+            },
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Price',
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Week',
+            },
+          },
+        },
+      };
+    
 
     return (
         <AdminLayout
-            title='Crop'
+            title={crop.name}
         >
-            Crop
+            <Bar data={data} options={options} />
         </AdminLayout>
     )
 }
