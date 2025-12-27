@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             BarangaySeeder::class,
             CategorySeeder::class,  
             CropSeeder::class,
+            CropPricesSeeder::class,
         ]);
 
         Farmer::factory(20)->create(); 
