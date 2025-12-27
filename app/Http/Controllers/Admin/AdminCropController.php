@@ -75,8 +75,23 @@ class AdminCropController extends Controller
 
     public function show(Crop $crop)
     {
-        return Inertia::render('admin/crops/Show', [
-            'crop' => $crop
+        $crop->load([
+            'category',
+            'prices' => fn($q) => $q->orderBy('recorded_at')
+        ]);
+
+        return Inertia::render('admin/crops/show', [
+            'crop' => $crop,
+            'chart' => [
+                'labels' => $crop->prices
+                    ->pluck('recorded_at')
+                    ->map(fn ($d) => $d->format('Y-m-d')),
+
+                'ranges' => $crop->prices->map(fn ($p) => [
+                    $p->price_min,
+                    $p->price_max,
+                ]),
+            ],
         ]);
     }
 
