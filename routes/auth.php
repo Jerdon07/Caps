@@ -90,7 +90,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         ->name('admin.crops.edit');
 
     Route::put('/crops/{crop}', [AdminCropController::class, 'update'])
-        ->name('crops.update');
+        ->name('admin.crops.update');
 
     Route::delete('/crops/{crop}', [AdminCropController::class, 'destroy'])
         ->name('crops.destroy');
