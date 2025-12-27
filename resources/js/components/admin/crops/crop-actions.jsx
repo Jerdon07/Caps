@@ -34,7 +34,7 @@ export default function CropActions({ crop }) {
             <DropdownMenuContent align="end">
                 <DropdownMenuItem asChild>
                     <Link
-                        onClick={() => router.visit(route("crops.edit", crop.id))}
+                        href={route('admin.crops.edit', crop)}
                     >
                         <SquarePen />
                         Edit
