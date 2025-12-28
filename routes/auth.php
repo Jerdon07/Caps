@@ -74,7 +74,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
 
     Route::get('/', function () {
         return Inertia::render('admin/index');
-    })->name('');
+    })->name('index');
 
     Route::resource('crops', AdminCropController::class);
 
