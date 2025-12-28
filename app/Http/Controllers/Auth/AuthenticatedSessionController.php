@@ -50,7 +50,7 @@ class AuthenticatedSessionController extends Controller
 
         if ($user->isAdmin) {
             Log::info('Redirecting to Admin Dashboard');
-            return redirect()->route('admin');
+            return redirect()->route('admin.index');
         };
         if (!$user->isApproved) {
             return redirect()->route('pending');
