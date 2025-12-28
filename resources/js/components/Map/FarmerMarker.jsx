@@ -18,7 +18,7 @@ export default function FarmerMarker({ farmer, onViewDetails, registerMarker }) 
                     <strong className="text-base">{farmer.user.name}</strong>
 
                     {/* Farmer Crops Planted */}
-                    <div className="flex gap-1 mt-2 justify-center flex-wrap">
+                    {/* <div className="flex gap-1 mt-2 justify-center flex-wrap">
                         {farmer.crops.map(crop => (
                             <div 
                                 key={crop.id} 
@@ -38,7 +38,7 @@ export default function FarmerMarker({ farmer, onViewDetails, registerMarker }) 
                             )}
                             </div>
                         ))}
-                    </div>
+                    </div> */}
 
                     {/* Button */}
                     <button
