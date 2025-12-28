@@ -20,7 +20,7 @@ export default function CropActions({ crop }) {
     const handleDelete = () => {
         if (!confirm("Delete this crop? This action is irreversible." - crop.name)) return
 
-        router.delete(route("crops.destroy", crop.id))
+        router.delete(route("admin.crops.destroy", crop.id))
     }
 
     return (
