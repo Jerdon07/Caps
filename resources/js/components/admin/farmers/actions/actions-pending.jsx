@@ -6,6 +6,7 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
+    DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import {
     MoreHorizontal,
@@ -18,9 +19,9 @@ import { Button } from "@/components/ui/button"
 
 export default function FarmerActions({ farmer }) {
     const handleDelete = () => {
-        if (!confirm("Delete this Account? This action is irreversible." - farmer.user.name)) return
+        if (!confirm(`Delete this account (${farmer.user.name})? This action is irreversible.`)) return
 
-        router.delete(route("admin.farmers.destroy", farmer.id))
+        router.delete(route("admin.farmers.delete", farmer.user.id))
     }
 
     return (
@@ -34,10 +35,19 @@ export default function FarmerActions({ farmer }) {
             <DropdownMenuContent align="end">
                 <DropdownMenuItem asChild>
                     <Link
-                        /* href={route('admin.farmers.show', farmer.id)} */
+                        href={route('admin.farmers.show', farmer.id)}
                     >
                         <ChartArea />
                         Details
+                    </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                    <Link
+                        /* href={route('admin.farmers.show', farmer.user)} */
+                    >
+                        <ChartArea />
+                        Approve Account
                     </Link>
                 </DropdownMenuItem>
 
