@@ -30,10 +30,16 @@ class AdminFarmerController extends Controller
 // --------------------------------------------------------
 // Pending Farmers Controller
 // --------------------------------------------------------
-    public function show(User $user) {
-        $user->load(['farmer', 'municipality', 'barangay', 'crops.category']);
+    public function show(Farmer $farmer) {
+        $farmer->load([
+            'user',
+            'municipality',
+            'barangay',
+        ]);
 
-        return response()->json($user);
+        return Inertia::render('admin/farmers/show', [
+            'farmer' => $farmer,
+        ]);
     }
 
     public function approve(User $user) {
