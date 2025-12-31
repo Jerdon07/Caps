@@ -9,10 +9,12 @@ class CropFactory extends Factory
 {
     public function definition(): array
     {
+        $id = fake()->numberBetween(1, 50);
+
         return [
             'category_id' => Category::factory(),
             'name'        => fake()->unique()->word(),
-            'image_path'  => '/crops' . fake()->word() . '.jpg',
+            'image_path'  => "https://picsum.photos/id/{$id}/640/480",
             'crop_weeks' => fake()->numberBetween(4, 20),
             
         ];
