@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminCropController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDemoController;
 use App\Http\Controllers\Admin\AdminFarmerController;
 use App\Http\Controllers\Admin\AdminGisController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\PriceTrends;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -79,11 +81,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
         return Inertia::render('admin/index');
     })->name('index');
 
+    Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+
     /* Crops Dashboard */
     Route::resource('crops', AdminCropController::class);
     Route::resource('crops.prices', AdminPriceController::class)->only(['create', 'store']);
 
     Route::get('/prices', [AdminPriceController::class, 'index'])->name('prices.index');
+
+    Route::get('/price-trends', PriceTrends::class)->name('price-trends');
     
     /* Farmers Dashboard */
     Route::get('farmers', [AdminFarmerController::class, 'index'])->name('farmers.index');
