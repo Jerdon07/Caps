@@ -14,16 +14,12 @@ class CropController extends Controller
     public function index(Request $request, CropService $cropService)
     {
         $crops = $cropService->getFilteredCrops($request->only(['category_id', 'search']));
-        
         $categories = Category::withCount('crops')->get();
 
         return Inertia::render('crops/index', [
             'crops' => $crops,
             'categories' => $categories,
-            'filters' => [
-                'category_id' => $request->category_id,
-                'search' => $request->search,
-            ],
+            'filters' => $request->only(['category_id', 'search']),
         ]);
     }
 
