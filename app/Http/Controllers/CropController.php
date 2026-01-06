@@ -2,38 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CropResource;
 use App\Models\Crop;
 use App\Models\Category;
+use App\Services\CropService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 
 class CropController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, CropService $cropService)
     {
-        $query = Crop::orderBy('name', 'asc')->with('category'); // Index crop from A to Z
-
-        // Filter by category
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->category_id);
-        }
-
-        // Search by crop name
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
-        $crops = $query->get();
+        $crops = $cropService->getFilteredCrops($request->only(['category_id', 'search']));
         $categories = Category::withCount('crops')->get();
 
-        return Inertia::render('Crops/Index', [
-            'crops' => $crops,
+        return Inertia::render('crops/index', [
+            'crops' => CropResource::collection($crops)->resolve(),
             'categories' => $categories,
-            'filters' => [
-                'category_id' => $request->category_id,
-                'search' => $request->search,
-            ],
+            'filters' => $request->only(['category_id', 'search']),
         ]);
     }
 

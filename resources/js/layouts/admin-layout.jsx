@@ -22,7 +22,7 @@ export default function AdminLayout({
     title,
 }) {
     return (
-        <SidebarProvider>
+        <SidebarProvider className="h-dvh">
             <Head title={title} />
 
             <AdminSidebar />
