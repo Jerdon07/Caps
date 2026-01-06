@@ -75,12 +75,16 @@ export default function CropSelection({ data, setData, errors, categories, crops
 
                 <div className='flex-1'>
                     {selectedCrops.length > 0 && (
-                        <ItemGroup className='grow h-[278px] flex flex-col gap-2 mb-3'>
+                        <ItemGroup className='grow h-69.5 flex flex-col gap-2 mb-3'>
                             {selectedCrops.map(crop => (
                                 <Item key={crop.id} variant='outline'>
                                     <ItemMedia>
                                         <Avatar className='rounded-sm'>
-                                            <AvatarImage src={`/storage/${crop.image_path}`}/>
+                                            <AvatarImage
+                                                src={crop.image_path.startsWith('http')
+                                                    ? crop.image_path
+                                                    : `/storage/${crop.image_path}`}
+                                            />
                                             <AvatarFallback>{crop.name.charAt(0)}</AvatarFallback>
                                         </Avatar>
                                     </ItemMedia>
@@ -140,7 +144,9 @@ export default function CropSelection({ data, setData, errors, categories, crops
                                                             >
                                                                 <AspectRatio ratio={16/9} className='overflow-hidden rounded-t-md'>
                                                                     <img
-                                                                        src={`/storage/${crop.image_path}`}
+                                                                        src={crop.image_path.startsWith('http')
+                                                                            ? crop.image_path
+                                                                            : `/storage/${crop.image_path}`}
                                                                         alt={crop.name}
                                                                         className='object-cover h-full w-full'
                                                                     />
