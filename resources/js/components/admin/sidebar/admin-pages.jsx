@@ -3,7 +3,6 @@ import { Link } from "@inertiajs/react"
 
 import { Button } from "@/components/ui/button"
 import { 
-  Sidebar,
   SidebarContent,
   SidebarMenu,
   SidebarMenuItem,
@@ -11,8 +10,6 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
   SidebarMenuButton,
-  SidebarFooter,
-  SidebarHeader 
 } from "@/components/ui/sidebar";
 
 export function AdminPages({
@@ -27,7 +24,10 @@ export function AdminPages({
               <SidebarMenu>
                 {group.pages.map((page) => (
                   <SidebarMenuItem key={page.url}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={route().current(page.url)}
+                  >
                     <Link href={route(page.url)}>
                       <page.icon />
                       <Button variant="icon">{page.title}</Button>
