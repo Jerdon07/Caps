@@ -35,7 +35,7 @@ export function AppSidebar({ header, content, ...props }) {
                         {auth.user?.isAdmin ? (
                             <NavAdmin user={auth.user} />
                         ) : (
-                            auth.user?.isApproved && (
+                            auth.user && (
                                 <NavUser user={auth.user}/>
                             )
                         )}
