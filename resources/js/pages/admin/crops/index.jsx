@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Plus, Search } from "lucide-react"
-import { Card } from "@/components/ui/card"
 
 export default function Crops({ crops }) {
     const [globalFilter, setGlobalFilter] = useState('')
@@ -18,7 +17,7 @@ export default function Crops({ crops }) {
         <AdminLayout
             title="Crops Dashboard"
         >
-            <Card className="h-95 overflow-hidden p-2">
+            <div className="h-95 overflow-hidden">
                 <DataTable
                     columns={columns}
                     data={crops}
@@ -47,7 +46,7 @@ export default function Crops({ crops }) {
                         </>
                     }
                 />
-            </Card>
+            </div>
         </AdminLayout>
     )
 }
