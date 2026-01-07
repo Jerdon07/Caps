@@ -3,18 +3,18 @@ import { Link } from "@inertiajs/react";
 import { MapPinned } from "lucide-react";
 import { Carrot } from "lucide-react";
 
-export default function Hero () {
+const HeroSection = () => {
     return (
-        <div className="h-96 bg-hero-pattern bg-center border-y-2 border-dark overflow-hidden">
-            <div className='h-full pt-32 pb-20 sm:px-6 lg:px-8 px-4 inset-0 bg-background/70 '>
+        <section className="h-100 bg-hero-pattern bg-center overflow-hidden">
+            <div className='h-full bg-background/70 flex items-center justify-center'>
                 <div className="max-w-4xl mx-auto text-left">
                     <h1 className="text-4xl md:text-center md:text-6xl font-bold text-gray-900 mb-6">
-                        Welcome to <span className="text-primary **bg-dark**">Hrvst</span>
+                        Welcome to <span className="text-background bg-primary px-2 rounded-lg">Hrvst</span>
                     </h1>
                     <p className="text-base md:text-center md:text-2xl font-medium text-dark mb-8">
-                        Connecting farmers and traders in Benguet Province through a centralized crop pricing platform
+                        Connecting farmers and traders in Benguet Province through a centralized crop pricing platform.
                     </p>
-                    <div className="flex gap-2 md:gap-4 justify-center">
+                    <nav className="flex gap-2 md:gap-4 justify-center">
                         <Link href={route('farmers.index')}>
                             <Button size="lg" className="w-40">
                                 <MapPinned />View Farmers
@@ -26,10 +26,10 @@ export default function Hero () {
                                 <Carrot />View Prices
                             </Button>
                         </Link>
-                    </div>
+                    </nav>
                 </div>
             </div>
-        </div>
-    );
-    
+        </section>
+    )
 }
+export default HeroSection
