@@ -1,16 +1,17 @@
-import AppLayout from '@/layouts/app-layout';
+
+import { usePage } from '@inertiajs/react';
+import HomeNav from '@/components/home/home-nav';
 import Hero from '@/pages/Home/Hero';
 
 export default function Index() {
-    return (
-        <AppLayout
-            title='Home'
-            sidebarHeader={'This is your Sidebar'}
-            sidebarContent={null}
-        >
-            <div className="flex flex-col min-h-screen bg-linear-to-br from-green-50 to-white">
-                <Hero />
+    const { auth } = usePage().props
 
+    return (
+            <div className="flex flex-col min-h-screen from-white to-green-300">
+
+                <HomeNav auth={auth} />
+
+                <Hero />
                 {/* Features */}
                 <div className="py-16 px-10 border-t-2 border-black">
                     <div className="grid md:grid-cols-3 gap-8">
@@ -53,6 +54,5 @@ export default function Index() {
                     </div>
                 </div>
             </div>
-        </AppLayout>
     );
 }
