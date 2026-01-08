@@ -26,14 +26,13 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
-        'isApproved',
+        'municipality_id',
+        'barangay_id',
+        'latitude',
+        'longitude',
+        'image_path'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'two_factor_secret',
@@ -41,16 +40,31 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     public function farmer()
     {
         return $this->hasOne(Farmer::class);
     }
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    public function municipality()
+    {
+        return $this->belongsTo(Municipality::class);
+    }
+
+    public function barangay()
+    {
+        return $this->belongsTo(Barangay::class);
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+
     protected function casts(): array
     {
         return [
@@ -58,17 +72,5 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
-    }
-
-    /* Scope Methods */
-    public function scopeActiveUsers(Builder $query, Carbon $start, Carbon $end): void
-    {
-        $query->whereHas('farmer')
-            ->whereIn('id', function ($subQuery) use ($start, $end) {
-                $subQuery->select('user_id')
-                    ->from('sessions')
-                    ->whereBetween('last_activity', [$start->timestamp, $end->timestamp])
-                    ->whereNotNull('user_id');
-            });
     }
 }
