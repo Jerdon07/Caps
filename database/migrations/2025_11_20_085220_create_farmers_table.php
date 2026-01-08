@@ -6,26 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('farmers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('municipality_id')->constrained('municipalities');
-            $table->foreignId('barangay_id')->constrained('barangays');
-            $table->decimal('latitude', 16, 17);
-            $table->decimal('longitude', 120, 15);
-            $table->string('image_path')->nullable();
+            $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('farm_image_path')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('farmers');
