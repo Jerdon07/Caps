@@ -4,7 +4,7 @@ import {
     useRef,
  } from 'react';
 import AppLayout from '@/layouts/app-layout';
-import AddressFilter from '@/components/Sidebar/Farmers/address-filter';
+import AddressFilter from '@/components/sidebar/Farmers/address-filter';
 import BaseMap from '@/components/Map/BaseMap';
 import MapResizer from '@/components/Map/map-resizer'
 import MapUpdater from '@/components/Map/MapUpdater';
@@ -67,7 +67,7 @@ const Index = ({ farmers, municipalities, filters }) => {
                 />
             }
         >
-            <div className='absolute inset-0 rounded-xl overflow-hidden'>
+            <div className='absolute inset-0 z-0 rounded-xl overflow-hidden'>
                 <BaseMap
                     center={center}
                     zoom={zoom}
