@@ -41,8 +41,6 @@ export default function Edit({ crop, categories }) {
         crop.image_path ? `/storage/${crop.image_path}` : null
     )
 
-    console.log(crop)
-
     return (
         <AppLayout
             title='Edit Vegetable'

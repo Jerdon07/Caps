@@ -11,7 +11,6 @@ export default function Dashboard({
     marketVolatility,
     topMunicipality,
 }) {
-    console.log(topMunicipality)
 
     return (
         <AdminLayout>

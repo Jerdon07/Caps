@@ -18,7 +18,6 @@ function MapClickHandler({ onSelect }) {
     useMapEvents({
         click(e) {
             onSelect(e.latlng.lat, e.latlng.lng);
-            console.log(e.latlng);
         },
     });
     return null;

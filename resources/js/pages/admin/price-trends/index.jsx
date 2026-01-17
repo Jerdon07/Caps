@@ -60,8 +60,6 @@ function PriceTrends ({
     volatilityAlert,
     marketPulse,
 }) {
-    console.log(volatilityAlert)
-
     return(
         <AdminLayout>
             <div className="grid grid-cols-10 row-cols-3 gap-4 h-full">

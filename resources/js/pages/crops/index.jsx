@@ -14,7 +14,7 @@ const Crops = ({ crops, categories, filters }) => {
     const filteredCrops = selectedCategory
         ? crops.filter(crop => crop.category_id === selectedCategory)
         : crops;
-    console.log(crops)
+        
     return (
         <AppLayout 
             title='Crops'

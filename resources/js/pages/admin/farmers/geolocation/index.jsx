@@ -5,7 +5,6 @@ import MapUpdater from "@/components/Map/MapUpdater";
 import AdminLayout from "@/layouts/admin-layout";
 
 export default function Geolocation({ farmers }) {
-    console.log(farmers)
 
     const getMapCenter = () => {
         if (farmers.length === 0) {
